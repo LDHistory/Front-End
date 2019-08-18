@@ -34,8 +34,7 @@ class App extends Component {
     axios.post('http://13.58.55.98:5000/request/login', {
       id : this.state.login.id,
       pw : this.state.login.pws,
-    }).then(response => {alert(response.data);
-    })
+    }).then(response => {alert(response.data)})
     .catch(response => {alert(response)})
   }
 
