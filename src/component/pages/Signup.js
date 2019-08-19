@@ -3,8 +3,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -54,9 +54,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp({history}) {
+
+//회원가입 페이지!!!
+export default function SignUp(props) {
   const classes = useStyles();
-  
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -65,22 +67,22 @@ export default function SignUp({history}) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          회원 가입
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-
-                name="first"
-
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
                 label="First Name"
                 autoFocus
+
+                name="first"
+                onChange={props.setData}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -90,10 +92,10 @@ export default function SignUp({history}) {
                 fullWidth
                 id="lastName"
                 label="Last Name"
+                autoComplete="lname"
 
                 name="last"
-
-                autoComplete="lname"
+                onChange={props.setData}
               />
             </Grid>
             <Grid item xs={12}>
@@ -103,10 +105,10 @@ export default function SignUp({history}) {
                 fullWidth
                 id="email"
                 label="Email Address"
+                autoComplete="email"
 
                 name="email"
-
-                autoComplete="email"
+                onChange={props.setData}
               />
             </Grid>
             <Grid item xs={12}>
@@ -114,43 +116,43 @@ export default function SignUp({history}) {
                 variant="outlined"
                 required
                 fullWidth
-
-                name="pw"
-
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+
+                name="pw"
+                onChange={props.setData}
               />
             </Grid>
           </Grid>
 
-          <Link href="/">
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
               onClick={() => {
-                history.replace('/');
+                (props.signup().then((response) => {
+                  if(response) {
+                    alert('회원가입이 완료되었습니다.')
+                    props.history.replace('/');
+                  } else {
+                    alert('회원가입 실패');
+                  }
+                }))
               }}
             >
-              Sign Up
+              회원 가입
             </Button>
-          </Link>
+
 
           <Grid container justify="flex-end">
             <Grid item>
               <Link variant="body2" onClick={() => {
-              history.replace('/')}}>
-                Already have an account? Sign in
+                props.history.replace('/')
+              }}>
+                이미 계정이 있다면? 로그인
               </Link>
             </Grid>
           </Grid>
