@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -52,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Signin = ({ info, getId, getPw, login }) => {
+const Signin = ({ state, getId, getPw, login, change }) => {
     const classes = useStyles();
 
     return (
@@ -107,7 +108,10 @@ const Signin = ({ info, getId, getPw, login }) => {
               </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link to="/join" variant="body2" onClick={() => {
+                                state.mode = 'joinin';
+                                change();
+                            }}>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

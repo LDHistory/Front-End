@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
-import Signin from './component/Login';
 import axios from 'axios';
+
+import Signin from './component/Login';
+import Joinin from './component/Join';
+
+
+
+
 
 class App extends Component {
   state = {
+    mode: 'signin',
+
     login: {
-      id: '',
-      pws: '',
+      email: '',
+      pw: '',
     },
+
+    join: {
+      first: '',
+      last: '',
+      email: '',
+      pw: '',
+    }
   }
 
   handleGetId = (e) => {
     const {value} = e.target;
     this.setState({
       login : {
-        id : value,
-        pws : this.state.login.pws
+        email : value,
+        pw : this.state.login.pw
       }
     })
   }
@@ -24,36 +39,67 @@ class App extends Component {
     const {value} = e.target;
     this.setState({
       login : {
-        id : this.state.login.id,
-        pws : value
+        email : this.state.login.email,
+        pw : value
       }
     })   
   }
 
   handleLogin = () => {
     axios.post('http://13.58.55.98:5000/request/login', {
-      id : this.state.login.id,
-      pw : this.state.login.pws,
+      email : this.state.login.email,
+      pw : this.state.login.pw,
     }).then(response => {alert(response.data);
     })
     .catch(response => {alert(response)})
   }
 
+  handleChange = () => {
+    //모드 바뀐거 rendering 위해...
+    const { state } = this.state;
+
+    this.setState({
+      ...this.state,
+    })
+  }
+
+
+  handleGetJoin = (e) => {
+    this.setState({
+      ...this.state,
+      join : {
+        [e.target.name]: e.target.value,
+      }
+    })
+
+    console.log(this.state);
+  }
+
   render() {
-    const { login } = this.state;
-    const { 
+    console.log(this.state.mode);
+    const {
       handleLogin,
       handleGetId, 
-      handleGetPw
+      handleGetPw,
+      handleChange,
+      handleGetJoin,
     } = this;
+
+
+    const signin = (
+      <Signin state={this.state} getId = {handleGetId} getPw = {handleGetPw} login={handleLogin} change={handleChange} />
+    )
+
+    const joinin = (
+      <Joinin state={this.state} get={handleGetJoin} change={handleChange} d="dd"></Joinin>
+    )
 
     return (
       <div>
-        <Signin info={login} getId = {handleGetId} getPw = {handleGetPw} login={handleLogin} />
+        { this.state.mode === 'signin'? signin : joinin }
       </div>
     );
   }
 }
-
 
 export default App;
