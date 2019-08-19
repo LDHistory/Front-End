@@ -1,133 +1,93 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
-
-import Signin from './component/Login';
-import Joinin from './component/Join';
-
-
-
-
+import { Signin, Signup } from './component/pages'
 
 class App extends Component {
 
   state = {
-    mode: 'signin',
-
-    first: '',
-    last: '',
-    email: '',
-    pw: '',
+    signin: {
+      email: '',
+      pw: '',
+    },
+    signup: {
+      first: '',
+      last: '',
+      email: '',
+      pw: '',
+    }
   }
 
-
-  handleGetFirst = (e) => {
+  //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
+  handleSetSigninData = (e) => {
     this.setState({
       ...this.state,
-      first: e.target.value,
+      signin: {
+        ...this.state.signin,
+        [e.target.name]: e.target.value,
+      }
     })
-    console.log(this.state);
+    console.log(this.state.signin);
   }
 
-  handleGetLast = (e) => {
+  //로그인 버튼을 눌렀을 때 express 서버로 보낸 data를 db에서 검증
+  handleSignin = () => {
+    return new Promise((resolve, reject) => {
+      axios.post('http://13.58.55.98:5000/request/login', {
+        email: this.state.signin.email,
+        pw: this.state.signin.pw,
+      })
+      .then(response => { 
+        resolve(response.data);
+      })
+      .catch(response => { 
+        reject(response.data);
+      })
+    })
+  }
+
+
+
+
+  //회원 가입 폼에서 입력한 값을 state에 업데이트 하는 메서드
+  handleSetSignupData = (e) => {
     this.setState({
       ...this.state,
-      last: e.target.value,
+      signup: {
+        ...this.state.signup,
+        [e.target.name]: e.target.value,
+      }
     })
-    console.log(this.state);
+    console.log(this.state.signup);
   }
 
-  handleGetEmail = (e) => {
-    this.setState({
-      ...this.state,
-      email: e.target.value,
-    })
-    console.log(this.state);
-  }
-
-  handleGetPw = (e) => {
-    this.setState({
-      ...this.state,
-      pw: e.target.value,
-    })
-    console.log(this.state);
-  }
-
-
-  handleLogin = () => {
-    axios.post('http://13.58.55.98:5000/request/login', {
-      email : this.state.email,
-      pw : this.state.pw,
-    }).then(response => {alert(response.data)})
-    .catch(response => {alert(response)})
-  }
-
-
-  handleJoin = () => {
-    axios.post('http://13.58.55.98:5000/request/join', {
-      first: this.state.first,
-      last: this.state.last,
-      email : this.state.email,
-      pw: this.state.pw,
+  //회원 가입 버튼을 눌렀을 때 express서버로 data를 전송하는 메서드
+  handleSignup = () => {
+    return new Promise((resolve, reject) => { //axios 비동기 작업을 Promise then으로 동기적으로 바꿈
+      axios.post('http://13.58.55.98:5000/request/join', {
+        first: this.state.signup.first,
+        last: this.state.signup.last,
+        email: this.state.signup.email,
+        pw: this.state.signup.pw,
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
     })
   }
-
-
-  handleChange = () => {
-    //모드 바뀐거 rendering 위해...
-    this.setState({
-      ...this.state,
-    })
-  }
-
-
-  checkin = () => {
-    console.log(this.state);
-  }
-
 
   render() {
-    console.log('mode :', this.state.mode);
-    const {
-      handleGetFirst,
-      handleGetLast,
-      handleGetEmail, 
-      handleGetPw,
-      handleLogin,
-      handleJoin,
-      handleChange,
-      checkin,
-    } = this;
-
-
-    const signin = (
-      <Signin 
-        state={this.state} 
-        getEmail={handleGetEmail} 
-        getPw={handleGetPw} 
-        login={handleLogin} 
-        change={handleChange} />
-    )
-
-    const joinin = (
-      <Joinin 
-        state={this.state} 
-        getFirst={handleGetFirst} 
-        getLast={handleGetLast} 
-        getEmail={handleGetEmail} 
-        getPw={handleGetPw} 
-        joins={handleJoin}
-        change={handleChange} 
-        chec={checkin}
-      />
-    )
-
-    const board = (
-      <Joinin state={this.state} change={handleChange} />
-    )
-
     return (
       <div>
-        { this.state.mode === 'signin'? signin : (this.state.mode === 'signin'? joinin : board) }
+        <Route
+          exact path='/'
+          render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} />}
+        />
+
+        <Route
+          path='/join'
+          render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} />}
+        />
       </div>
     );
   }
