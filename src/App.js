@@ -9,93 +9,125 @@ import Joinin from './component/Join';
 
 
 class App extends Component {
+
   state = {
     mode: 'signin',
 
-    login: {
-      email: '',
-      pw: '',
-    },
-
-    join: {
-      first: '',
-      last: '',
-      email: '',
-      pw: '',
-    }
+    first: '',
+    last: '',
+    email: '',
+    pw: '',
   }
 
-  handleGetId = (e) => {
-    const {value} = e.target;
+
+  handleGetFirst = (e) => {
     this.setState({
-      login : {
-        email : value,
-        pw : this.state.login.pw
-      }
+      ...this.state,
+      first: e.target.value,
     })
+    console.log(this.state);
+  }
+
+  handleGetLast = (e) => {
+    this.setState({
+      ...this.state,
+      last: e.target.value,
+    })
+    console.log(this.state);
+  }
+
+  handleGetEmail = (e) => {
+    this.setState({
+      ...this.state,
+      email: e.target.value,
+    })
+    console.log(this.state);
   }
 
   handleGetPw = (e) => {
-    const {value} = e.target;
     this.setState({
-      login : {
-        email : this.state.login.email,
-        pw : value
-      }
-    })   
+      ...this.state,
+      pw: e.target.value,
+    })
+    console.log(this.state);
   }
+
 
   handleLogin = () => {
     axios.post('http://13.58.55.98:5000/request/login', {
-      id : this.state.login.id,
-      pw : this.state.login.pws,
+      email : this.state.email,
+      pw : this.state.pw,
     }).then(response => {alert(response.data)})
     .catch(response => {alert(response)})
   }
 
+
+  handleJoin = () => {
+    axios.post('http://13.58.55.98:5000/request/join', {
+      first: this.state.first,
+      last: this.state.last,
+      email : this.state.email,
+      pw: this.state.pw,
+    })
+  }
+
+
   handleChange = () => {
     //모드 바뀐거 rendering 위해...
-    const { state } = this.state;
-
     this.setState({
       ...this.state,
     })
   }
 
 
-  handleGetJoin = (e) => {
-    this.setState({
-      ...this.state,
-      join : {
-        [e.target.name]: e.target.value,
-      }
-    })
-
+  checkin = () => {
     console.log(this.state);
   }
 
+
   render() {
-    console.log(this.state.mode);
+    console.log('mode :', this.state.mode);
     const {
-      handleLogin,
-      handleGetId, 
+      handleGetFirst,
+      handleGetLast,
+      handleGetEmail, 
       handleGetPw,
+      handleLogin,
+      handleJoin,
       handleChange,
-      handleGetJoin,
+      checkin,
     } = this;
 
 
     const signin = (
-      <Signin state={this.state} getId = {handleGetId} getPw = {handleGetPw} login={handleLogin} change={handleChange} />
+      <Signin 
+        state={this.state} 
+        getEmail={handleGetEmail} 
+        getPw={handleGetPw} 
+        login={handleLogin} 
+        change={handleChange} />
     )
 
     const joinin = (
-      <Joinin state={this.state} get={handleGetJoin} change={handleChange} d="dd"></Joinin>
+      <Joinin 
+        state={this.state} 
+        getFirst={handleGetFirst} 
+        getLast={handleGetLast} 
+        getEmail={handleGetEmail} 
+        getPw={handleGetPw} 
+        joins={handleJoin}
+        change={handleChange} 
+        chec={checkin}
+      />
+    )
+
+    const board = (
+      <Joinin state={this.state} change={handleChange} />
     )
 
     return (
       <div>
-        { this.state.mode === 'signin'? signin : joinin }
+        { this.state.mode === 'signin'? signin : (this.state.mode === 'signin'? joinin : board) }
       </div>
     );
   }
