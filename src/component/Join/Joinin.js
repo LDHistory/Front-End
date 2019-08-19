@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+//import { Link as Link2 }  from 'react-router-dom';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,8 +56,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp({state, get, change}) {
+export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins, change, chec}) {
   const classes = useStyles();
+
+  console.log(state, getFirst);
   
   return (
     <Container component="main" maxWidth="xs">
@@ -74,7 +78,7 @@ export default function SignUp({state, get, change}) {
                 autoComplete="fname"
 
                 name="first"
-                onChange={get}
+                onChange={getFirst}
 
                 variant="outlined"
                 required
@@ -93,7 +97,7 @@ export default function SignUp({state, get, change}) {
                 label="Last Name"
 
                 name="last"
-                onChange={get}
+                onChange={getLast}
 
                 autoComplete="lname"
               />
@@ -107,7 +111,7 @@ export default function SignUp({state, get, change}) {
                 label="Email Address"
 
                 name="email"
-                onChange={get}
+                onChange={getEmail}
 
                 autoComplete="email"
               />
@@ -119,7 +123,7 @@ export default function SignUp({state, get, change}) {
                 fullWidth
 
                 name="pw"
-                onChange={get}
+                onChange={getPw}
 
                 label="Password"
                 type="password"
@@ -135,16 +139,19 @@ export default function SignUp({state, get, change}) {
             </Grid>
           </Grid>
 
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
+          <Link to="/">
+            <Button
+              //type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              //className={classes.submit}
+              onClick={joins}
+            >
+              Sign Up
+            </Button>
+          </Link>
+          
           
 
           <Grid container justify="flex-end">
@@ -162,6 +169,7 @@ export default function SignUp({state, get, change}) {
       <Box mt={5}>
         <Copyright />
       </Box>
+      <button onClick={chec}>dddddddddddddddd</button>
     </Container>
   );
 }

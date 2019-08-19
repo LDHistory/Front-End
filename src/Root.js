@@ -11,8 +11,8 @@ import Joinin from './component/Join';
 const Root = () => {
     return (
         <BrowserRouter>
-            <Route exact path='/' component={App}></Route>
-            <Route exact path='join' component={Joinin} />
+            <Route exact path='/' component={App} />
+            <Route exact path='/join' component={Joinin} />
         </BrowserRouter>
     );
 };
