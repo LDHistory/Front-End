@@ -97,7 +97,14 @@ export default function Signin(props) {
                             variant="contained"
                             color="primary"
                             onClick={() => {
-                                (props.handleLogin())? props.history.replace('/') : alert('Check your ID!') 
+                                props.handleLogin().then((check) => {
+                                    
+                                    if (check){
+                                        props.history.replace('/join');
+                                    }else {
+                                        alert('Check your ID!');
+                                    }
+                                })
                             }}
                             className={classes.submit}
                         >
