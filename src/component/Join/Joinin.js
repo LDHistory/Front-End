@@ -13,8 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-//import { Link as Link2 }  from 'react-router-dom';
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -56,10 +54,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins, change, chec}) {
+export default function SignUp({history}) {
   const classes = useStyles();
-
-  console.log(state, getFirst);
   
   return (
     <Container component="main" maxWidth="xs">
@@ -78,7 +74,6 @@ export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins
                 autoComplete="fname"
 
                 name="first"
-                onChange={getFirst}
 
                 variant="outlined"
                 required
@@ -97,7 +92,6 @@ export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins
                 label="Last Name"
 
                 name="last"
-                onChange={getLast}
 
                 autoComplete="lname"
               />
@@ -111,7 +105,6 @@ export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins
                 label="Email Address"
 
                 name="email"
-                onChange={getEmail}
 
                 autoComplete="email"
               />
@@ -123,7 +116,6 @@ export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins
                 fullWidth
 
                 name="pw"
-                onChange={getPw}
 
                 label="Password"
                 type="password"
@@ -139,27 +131,25 @@ export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins
             </Grid>
           </Grid>
 
-          <Link to="/">
+          <Link href="/">
             <Button
-              //type="submit"
+              type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              //className={classes.submit}
-              onClick={joins}
+              className={classes.submit}
+              onClick={() => {
+                history.replace('/');
+              }}
             >
               Sign Up
             </Button>
           </Link>
-          
-          
 
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/" variant="body2" onClick={() => {
-                state.mode = 'signin';
-                change();
-              }}>
+              <Link variant="body2" onClick={() => {
+              history.replace('/')}}>
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -169,7 +159,6 @@ export default function SignUp({state, getFirst, getLast, getEmail, getPw, joins
       <Box mt={5}>
         <Copyright />
       </Box>
-      <button onClick={chec}>dddddddddddddddd</button>
     </Container>
   );
 }
