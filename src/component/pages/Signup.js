@@ -56,7 +56,6 @@ const useStyles = makeStyles(theme => ({
 
 
 //회원가입 페이지!!!
-
 export default function SignUp(props) {
   const classes = useStyles();
 
@@ -146,6 +145,7 @@ export default function SignUp(props) {
             >
               회원 가입
             </Button>
+
 
           <Grid container justify="flex-end">
             <Grid item>
