@@ -1,5 +1,4 @@
 export { default as Signin } from './Signin';
 export { default as Signup } from './Signup';
+export { default as Main } from './main/index';
 
-
-//풀 리퀘스트 연습!

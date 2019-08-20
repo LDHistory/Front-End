@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
-import { Signin, Signup } from './component/pages'
+import { Signin, Signup, Main } from './component/pages'
 
 class App extends Component {
 
@@ -86,8 +86,13 @@ class App extends Component {
         />
 
         <Route
-          path='/join'
+          exact path='/join'
           render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} />}
+        />
+
+        <Route
+          path='/main'
+          render={props => <Main {...props} setData={this.handleSetSignupData} signup={this.handleSignup} />}
         />
       </div>
     );
