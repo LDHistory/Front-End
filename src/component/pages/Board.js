@@ -1,33 +1,43 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
-import { BoardItem, BoardWrite } from './boardPages';
+//import { Route, Link } from 'react-router-dom';
+//import { BoardWrite } from './boardPages';
+import { BoardItem } from './boardPages';
 
 const Board = (props) => {
-    console.log(props);
+    console.log('과연? : ', props.list);
+
+    const List = props.list.map((value, key) => 
+    {
+        return (
+            <BoardItem
+                no={value.board_id}
+                title={value.board_title}
+                name={value.board_name}
+                date={value.board_date}
+                key={key}
+            />
+        )
+    });
+
     return (
         <div align="center">
-            <Route exact path='/boardwrite' component={BoardWrite} />
             <br />
             <h2 align="center">3조 게시판 렛츠기릿</h2>
 
-            <table border="1" width="700">
-                <tbody>
-                    <tr >
-                        <td align="center">No.</td>
-                        <td align="center">Title</td>
-                        <td align="center">Name</td>
-                        <td align="center">Content</td>
-                        <td align="center">Date</td>
+            <table width="1000" border="1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Title</th>
+                        <th>Name</th>
+                        <th>Date</th>
                     </tr>
-                    {/* {
-                            datas.map((row) =>
-                                (<BoardItem key={row.no} row={row} onRemove={this.handleRemove} onUpdate={this.handleUpdate} />)
-                            )
-                        } */}
+                </thead>
+                
+                <tbody>
+                    {List}
                 </tbody>
             </table>
-            <br />페이징처리 부분<br /><br />
-            <Link to='/boardwrite'><button>글쓰기</button></Link>
             <br />
         </div>
     );

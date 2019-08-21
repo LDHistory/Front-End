@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
 
-import { Signin, Signup, Main, About, Board } from './component/pages';
+import { Signin, Signup, Main } from './component/pages';
 
 class App extends Component {
 
@@ -18,7 +18,11 @@ class App extends Component {
       last: '',
       email: '',
       pw: '',
-    }
+    },
+
+    arr: [
+      
+    ],
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -95,24 +99,47 @@ class App extends Component {
   }
 
 
+  componentDidMount() {
+    this.test();
+  }
+  
+  test = () => {
+    axios.get('http://13.58.55.98:5000/request/getBoardList')
+    .then((response) => {
+      console.log(response.data);
+      this.setState({
+        arr: response.data,
+      });
+    })
+  }
+
+  // accept = (array) => {
+  //   this.setState({
+  //     arr: array,
+  //   })
+  //   console.log('과연? ',this.state.arr);
+  // }
+
 
   render() {
-    const { site } = this.state;
 
     return (
       <div>
         <Route
-          path='/'
+          exact path='/'
           render={ props =>
-                          <Main {...props}
-                            setData={this.handleSetSignupData}
-                            signup={this.handleSignup}
-                            changeAbout={this.changeAbout}
-                            changeBoard={this.changeBoard}
-                          >
-                            {(site === 'about') ? <About /> : <Board />}
-                            {/* dd */}
-                          </Main>
+                      <Main {...props}
+                        setData={this.handleSetSignupData}
+                        signup={this.handleSignup}
+                        changeAbout={this.changeAbout}
+                        changeBoard={this.changeBoard} 
+                        site={this.state.site}
+                        
+                        // boardlist={this.test}
+                        // accept={this.accept}
+                        
+                        state={this.state}
+                      />
                   }
         />
         

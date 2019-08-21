@@ -7,6 +7,9 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 
+import { About, Board } from './index';
+//import { Route } from 'react-router-dom';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -96,7 +99,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Main(props) {
   const classes = useStyles();
-  console.log('main:',props);
+  console.log(props.state.arr);
+
+  //{(props.site === 'about') ? <About {...props} /> : <Board {...props} />}
 
   return (
     <React.Fragment>
@@ -145,7 +150,6 @@ export default function Main(props) {
             variant="body2"
             onClick={() => {
               props.changeAbout();
-              props.history.replace('/about');
             }}
             className={classes.toolbarLink}
           >
@@ -157,15 +161,29 @@ export default function Main(props) {
             variant="body2"
             onClick={() => {
               props.changeBoard();
-              props.history.replace('/board');
+              // props.boardlist().then((response) => {
+              //   props.accept(response);
+              // })
             }}
-            className={classes.toolbarLink}>
+            
+            className={classes.toolbarLink}
+          >
             Board
           </Link>
         </Toolbar>
+
         <main>
-          {props.children}
+
+          {(props.site === 'about') ? 
+                                        <About />
+                                    :
+                                        <Board list={props.state.arr} />
+
+          }
+
         </main>
+
+
       </Container>
       {/* Footer */}
       <footer className={classes.footer}>

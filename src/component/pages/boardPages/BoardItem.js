@@ -1,10 +1,13 @@
 import React from 'react';
 
-const BoardItem = () => {
+const BoardItem = ({no, title, name, date}) => {
     return (
-        <div>
-            
-        </div>
+        <tr>
+            <td>{no}</td>
+            <td>{title}</td>
+            <td>{name}</td>
+            <td>{date}</td>
+        </tr>
     );
 };
 
