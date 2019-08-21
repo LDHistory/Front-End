@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Signin, Signup, Main, About, Board } from './component/pages'
+import { Signin, Signup, Main, About, Board } from './component/pages';
 
 class App extends Component {
 
@@ -102,7 +102,7 @@ class App extends Component {
     return (
       <div>
         <Route
-          exact path='/'
+          path='/'
           render={ props =>
                           <Main {...props}
                             setData={this.handleSetSignupData}
@@ -110,7 +110,6 @@ class App extends Component {
                             changeAbout={this.changeAbout}
                             changeBoard={this.changeBoard}
                           >
-                            
                             {(site === 'about') ? <About /> : <Board />}
 
                           </Main>

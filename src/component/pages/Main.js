@@ -96,6 +96,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Main(props) {
   const classes = useStyles();
+  console.log('main:',props);
 
   return (
     <React.Fragment>
@@ -137,14 +138,17 @@ export default function Main(props) {
           </Button>
         </Toolbar>
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+
           <Link
             color="inherit"
             noWrap
             variant="body2"
             onClick={() => {
               props.changeAbout();
+              props.history.replace('/about');
             }}
-            className={classes.toolbarLink}>
+            className={classes.toolbarLink}
+          >
             About
           </Link>
           <Link
@@ -153,6 +157,7 @@ export default function Main(props) {
             variant="body2"
             onClick={() => {
               props.changeBoard();
+              props.history.replace('/board');
             }}
             className={classes.toolbarLink}>
             Board

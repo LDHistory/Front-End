@@ -111,6 +111,7 @@ const memberPosts = [
 
 export default function About(props) {
   const classes = useStyles();
+  console.log('about:',props);
 
   return (
     <React.Fragment>
