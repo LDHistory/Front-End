@@ -83,6 +83,15 @@ class App extends Component {
     })
   }
 
+  //게시판 정보를 DB에서 가져오는 메서드
+  handleGetBoard = () => {
+    axios.get('http://13.58.55.98:5000/request/getBoardList')
+    .then((response) => {
+      this.setState({
+        arr: response.data,
+      });
+    })
+  }
 
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
   changeAbout = () => {
@@ -100,26 +109,8 @@ class App extends Component {
 
 
   componentDidMount() {
-    this.test();
+    this.handleGetBoard();
   }
-  
-  test = () => {
-    axios.get('http://13.58.55.98:5000/request/getBoardList')
-    .then((response) => {
-      console.log(response.data);
-      this.setState({
-        arr: response.data,
-      });
-    })
-  }
-
-  // accept = (array) => {
-  //   this.setState({
-  //     arr: array,
-  //   })
-  //   console.log('과연? ',this.state.arr);
-  // }
-
 
   render() {
 
@@ -134,10 +125,6 @@ class App extends Component {
                         changeAbout={this.changeAbout}
                         changeBoard={this.changeBoard} 
                         site={this.state.site}
-                        
-                        // boardlist={this.test}
-                        // accept={this.accept}
-                        
                         state={this.state}
                       />
                   }

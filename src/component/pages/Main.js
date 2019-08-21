@@ -99,16 +99,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function Main(props) {
   const classes = useStyles();
-  console.log(props.state.arr);
-
-  //{(props.site === 'about') ? <About {...props} /> : <Board {...props} />}
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
         <Toolbar className={classes.toolbar}>
-          
+
           <Typography
             component="h2"
             variant="h5"
@@ -116,9 +113,9 @@ export default function Main(props) {
             align="left"
             noWrap
             className={classes.toolbarTitle}
-            /* onClick={() => { 버튼아니라서 onClick이 안됨
-              props.history.replace('/');
-            }} */
+          /* onClick={() => { 버튼아니라서 onClick이 안됨
+            props.history.replace('/');
+          }} */
           >
             Bit Team 3
           </Typography>
@@ -161,11 +158,8 @@ export default function Main(props) {
             variant="body2"
             onClick={() => {
               props.changeBoard();
-              // props.boardlist().then((response) => {
-              //   props.accept(response);
-              // })
             }}
-            
+
             className={classes.toolbarLink}
           >
             Board
@@ -173,16 +167,8 @@ export default function Main(props) {
         </Toolbar>
 
         <main>
-
-          {(props.site === 'about') ? 
-                                        <About />
-                                    :
-                                        <Board list={props.state.arr} />
-
-          }
-
+          {(props.site === 'about') ? <About /> : <Board list={props.state.arr} />}
         </main>
-
 
       </Container>
       {/* Footer */}

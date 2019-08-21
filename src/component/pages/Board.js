@@ -4,7 +4,6 @@ import React from 'react';
 import { BoardItem } from './boardPages';
 
 const Board = (props) => {
-    console.log('과연? : ', props.list);
 
     const List = props.list.map((value, key) => 
     {
