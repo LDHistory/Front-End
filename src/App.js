@@ -111,7 +111,7 @@ class App extends Component {
                             changeBoard={this.changeBoard}
                           >
                             {(site === 'about') ? <About /> : <Board />}
-
+                            {/* dd */}
                           </Main>
                   }
         />
