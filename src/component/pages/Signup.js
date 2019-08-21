@@ -148,6 +148,17 @@ export default function SignUp(props) {
 
 
           <Grid container justify="flex-end">
+
+            <Grid item xs>
+              <Link variant="body2" onClick={() => {
+                props.changeAbout();
+                props.history.replace('/');
+              }}
+              >
+                메인 페이지로
+              </Link>
+            </Grid>
+
             <Grid item>
               <Link variant="body2" onClick={() => {
                 props.history.replace('/')

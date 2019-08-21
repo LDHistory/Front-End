@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
-import { Signin, Signup, Main } from './component/pages'
+import { Signin, Signup, Main, About, Board } from './component/pages'
 
 class App extends Component {
 
   state = {
+    site: 'about',
+
     signin: {
       email: '',
       pw: '',
@@ -77,22 +79,52 @@ class App extends Component {
     })
   }
 
+
+  //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
+  changeAbout = () => {
+    this.setState({
+        site : 'about',
+    })
+  }
+
+  //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
+  changeBoard = () => {
+     this.setState({
+         site : 'board',
+     })
+  }
+
+
+
   render() {
+    const { site } = this.state;
+
     return (
       <div>
         <Route
           exact path='/'
-          render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} />}
+          render={ props =>
+                          <Main {...props}
+                            setData={this.handleSetSignupData}
+                            signup={this.handleSignup}
+                            changeAbout={this.changeAbout}
+                            changeBoard={this.changeBoard}
+                          >
+                            
+                            {(site === 'about') ? <About /> : <Board />}
+
+                          </Main>
+                  }
+        />
+        
+        <Route
+          path='/login'
+          render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
         />
 
         <Route
-          exact path='/join'
-          render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} />}
-        />
-
-        <Route
-          path='/main'
-          render={props => <Main {...props} setData={this.handleSetSignupData} signup={this.handleSignup} />}
+          path='/join'
+          render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
         />
       </div>
     );

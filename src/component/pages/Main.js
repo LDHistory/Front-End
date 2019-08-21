@@ -110,13 +110,29 @@ export default function Main(props) {
             align="left"
             noWrap
             className={classes.toolbarTitle}
+            /* onClick={() => { 버튼아니라서 onClick이 안됨
+              props.history.replace('/');
+            }} */
           >
             Bit Team 3
           </Typography>
-          <Button variant="outlined" size="small">
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              props.history.replace('/login');
+            }}
+          >
             로그인
-          </Button>
-          <Button variant="outlined" size="small">
+          </Button> &nbsp;
+
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              props.history.replace('/join');
+            }}
+          >
             회원가입
           </Button>
         </Toolbar>
