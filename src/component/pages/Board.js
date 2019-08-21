@@ -1,11 +1,11 @@
 import React from 'react';
 
-const board = () => {
+const Board = () => {
     return (
         <div>
-           <h1>test</h1> 
+           <h1>test</h1>
         </div>
     );
 };
 
-export default board;
+export default Board;
