@@ -155,6 +155,7 @@ export default function Main(props) {
     }
   }
 
+  //로그인 안하면 Board 안보이게 하는거 적용할 때 주석 풀기~~
   // function setBoard() {
   //  const checkInfo = props.state.signin;
   //  if (checkInfo.email !== '' && checkInfo.pw !== ''){
@@ -227,15 +228,15 @@ export default function Main(props) {
             Board
           </Link>
 
-          {/* {setBoard()} */}
+          {/* {setBoard()} 로그인 안하면 board 안보이게..적용 시 위에 <Link>board</Link> 지우기*/}
         </Toolbar>
 
         {/* // 수정시작 ---------------------------------------------------------------------- */}
         {/* site 값 비교를 통해 컴포넌트 띄우기 위해 */}
         <main>
-          {(props.site === 'about') ? <About /> : (props.site === 'boardwrite')? 
+          {(props.site === '' || props.site === 'about') ? <About /> : (props.site === 'boardwrite')? 
                                           <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData} changeBoard={() => {props.changeBoard()}} ondataSubmit={() =>{ props.ondataSubmit() }} /> :
-                                                      <Board list={props.state.arr} changeWrite={() => {props.changeWrite()}} />  }
+                                                      <Board list={props.state.arr} changeWrite={() => {props.changeWrite()}} totalCount={props.state.totalCount} />  }
         </main>
         {/* // 수정끝 ---------------------------------------------------------------------- */}
 
