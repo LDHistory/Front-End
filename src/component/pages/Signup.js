@@ -136,7 +136,8 @@ export default function SignUp(props) {
                 (props.signup().then((response) => {
                   if(response) {
                     alert('회원가입이 완료되었습니다.')
-                    props.history.replace('/');
+                    
+                    props.history.push('/');
                   } else {
                     alert('회원가입 실패');
                   }
@@ -152,7 +153,7 @@ export default function SignUp(props) {
             <Grid item xs>
               <Link variant="body2" onClick={() => {
                 props.changeAbout();
-                props.history.replace('/');
+                props.history.push('/');
               }}
               >
                 메인 페이지로
@@ -161,7 +162,7 @@ export default function SignUp(props) {
 
             <Grid item>
               <Link variant="body2" onClick={() => {
-                props.history.replace('/')
+                props.history.push('/')
               }}>
                 이미 계정이 있다면? 로그인
               </Link>

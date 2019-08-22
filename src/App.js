@@ -13,6 +13,7 @@ class App extends Component {
       email: '',
       pw: '',
     },
+
     signup: {
       first: '',
       last: '',
@@ -63,8 +64,16 @@ class App extends Component {
     })
   }
 
-
-
+  //로그아웃 기능을 하는 메서드
+  handleLogout = () => {
+    this.setState({
+      ...this.state,
+      signin : {
+        email: '',
+        pw: '',
+      }
+    })
+  }
 
   //회원 가입 폼에서 입력한 값을 state에 업데이트 하는 메서드
   handleSetSignupData = (e) => {
@@ -130,7 +139,6 @@ class App extends Component {
   // this.handleGetBoard(); 여기로 이동시킴,
   // board로 이동할 때 마다 db데이터 값을 가져오기 위함
   changeBoard = () => {
-    this.handleGetBoard();
      this.setState({
          site : 'board',
      })
@@ -204,9 +212,34 @@ class App extends Component {
   // 수정시작 ----------------------------------------------------------------------
   // this.handleGetBoard(); 를 changeBoard 안으로 이동
   componentDidMount() {
-    // this.handleGetBoard();
+    this.handleGetBoard();
+    this.handleTotalPage();
+  }
+
+
+  //--------------------------------------------
+  //페이징 처리 로직 작성 중...
+
+  
+  //한 페이지에 출력될 게시물 수 : countList  => 페이지당 10개의 게시물
+  //한 화면에 출력될 페이지 수 : countPage => 한 화면에 10개의 페이지를 출력
+  //현재 페이지 번호 : currentPage
+
+
+  //총 게시글의 개수를 가져와서
+  //한 페이지에 출력될 게시물 수(10, countList)로 나눈 값을 반환한다.
+  handleTotalPage = () => {
+    axios.get('http://13.58.55.98:5000/request/getBoardCount')
+    .then((response) => {
+      console.log('게시글 개수.. string 타입이므로 parsing하기 : ', response.data);
+    })
   }
   // 수정끝 ----------------------------------------------------------------------
+
+
+
+
+  //--------------------------------------------
 
   render() {
 
@@ -219,12 +252,16 @@ class App extends Component {
                         setData={this.handleSetSignupData}
                         signup={this.handleSignup}
                         changeAbout={this.changeAbout}
-                        changeBoard={this.changeBoard} 
+                        changeBoard={this.changeBoard}
+      
                         // 수정시작 ----------------------------------------------------------------------
                         changeWrite={this.changeWrite}
                         handleSetBoardWriteData={this.handleSetBoardWriteData}
                         ondataSubmit={this.ondataSubmit}
                         // 수정끝 ----------------------------------------------------------------------
+      
+                        handleLogout={this.handleLogout} 
+      
                         site={this.state.site}
                         state={this.state}
                       />
