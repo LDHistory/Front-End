@@ -13,6 +13,7 @@ class App extends Component {
       email: '',
       pw: '',
     },
+
     signup: {
       first: '',
       last: '',
@@ -110,7 +111,32 @@ class App extends Component {
 
   componentDidMount() {
     this.handleGetBoard();
+    this.handleTotalPage();
   }
+
+
+  //--------------------------------------------
+  //페이징 처리 로직 작성 중...
+
+  
+  //한 페이지에 출력될 게시물 수 : countList  => 페이지당 10개의 게시물
+  //한 화면에 출력될 페이지 수 : countPage => 한 화면에 10개의 페이지를 출력
+  //현재 페이지 번호 : currentPage
+
+
+  //총 게시글의 개수를 가져와서
+  //한 페이지에 출력될 게시물 수(10, countList)로 나눈 값을 반환한다.
+  handleTotalPage = () => {
+    axios.get('http://13.58.55.98:5000/request/getBoardCount')
+    .then((response) => {
+      console.log('게시글 개수.. string 타입이므로 parsing하기 : ', response.data);
+    })
+  }
+
+
+
+
+  //--------------------------------------------
 
   render() {
 
