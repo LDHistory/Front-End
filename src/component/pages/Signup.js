@@ -136,7 +136,6 @@ export default function SignUp(props) {
                 (props.signup().then((response) => {
                   if(response) {
                     alert('회원가입이 완료되었습니다.')
-                    
                     props.history.replace('/');
                   } else {
                     alert('회원가입 실패');

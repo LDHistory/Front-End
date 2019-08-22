@@ -100,57 +100,6 @@ const useStyles = makeStyles(theme => ({
 export default function Main(props) {
   const classes = useStyles();
 
-  function setJoinButton() {
-    const checkInfo = props.state.signin;
-
-    if (checkInfo.email === '' && checkInfo.pw === ''){
-      return <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                props.history.replace('/join');
-              }}>
-              회원가입
-            </Button>
-    } else {
-      return null;
-    }
-  }
-
-  function setLoginButton() {
-    const checkInfo = props.state.signin;
-
-    if (checkInfo.email === '' && checkInfo.pw === ''){
-      return <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                props.history.replace('/login');
-              }}>
-                로그인
-              </Button>
-    } else {
-      return null;
-    }
-  }
-
-  function setLogoutButton() {
-    const checkInfo = props.state.signin;
-
-    if (checkInfo.email !== '' && checkInfo.pw !== ''){
-      return <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                props.handleLogout();
-              }}>
-                로그아웃
-              </Button>
-    } else {
-      return null;
-    }
-  }
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -170,10 +119,25 @@ export default function Main(props) {
           >
             Bit Team 3
           </Typography>
-          {setLoginButton()}
-          {setLogoutButton()}
-          &nbsp;
-          {setJoinButton()} 
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              props.history.replace('/login');
+            }}
+          >
+            로그인
+          </Button> &nbsp;
+
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              props.history.replace('/join');
+            }}
+          >
+            회원가입
+          </Button>
         </Toolbar>
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
 

@@ -13,7 +13,6 @@ class App extends Component {
       email: '',
       pw: '',
     },
-
     signup: {
       first: '',
       last: '',
@@ -22,7 +21,7 @@ class App extends Component {
     },
 
     arr: [
-
+      
     ],
   }
 
@@ -35,6 +34,7 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
+    console.log(this.state.signin);
   }
 
   //로그인 버튼을 눌렀을 때 express 서버로 보낸 data를 db에서 검증
@@ -44,14 +44,17 @@ class App extends Component {
         email: this.state.signin.email,
         pw: this.state.signin.pw,
       })
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(response => {
-          reject(response.data);
-        })
+      .then(response => { 
+        resolve(response.data);
+      })
+      .catch(response => { 
+        reject(response.data);
+      })
     })
   }
+
+
+
 
   //회원 가입 폼에서 입력한 값을 state에 업데이트 하는 메서드
   handleSetSignupData = (e) => {
@@ -62,6 +65,7 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
+    console.log(this.state.signup);
   }
 
   //회원 가입 버튼을 눌렀을 때 express서버로 data를 전송하는 메서드
@@ -73,56 +77,34 @@ class App extends Component {
         email: this.state.signup.email,
         pw: this.state.signup.pw,
       })
-        .then((response) => {
-          if (response.data){
-            this.setState({
-              ...this.state,
-              signup: {
-                first: '',
-                last: '',
-                email: '',
-                pw: '',
-              }
-            })
-          }
-          resolve(response.data);
-        })
-    })
-  }
-
-  //로그아웃 기능을 하는 메서드
-  handleLogout = () => {
-    this.setState({
-      ...this.state,
-      signin : {
-        email: '',
-        pw: '',
-      }
+      .then((response) => {
+        resolve(response.data);
+      })
     })
   }
 
   //게시판 정보를 DB에서 가져오는 메서드
   handleGetBoard = () => {
     axios.get('http://13.58.55.98:5000/request/getBoardList')
-      .then((response) => {
-        this.setState({
-          arr: response.data,
-        });
-      })
+    .then((response) => {
+      this.setState({
+        arr: response.data,
+      });
+    })
   }
 
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
   changeAbout = () => {
     this.setState({
-      site: 'about',
+        site : 'about',
     })
   }
 
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
   changeBoard = () => {
-    this.setState({
-      site: 'board',
-    })
+     this.setState({
+         site : 'board',
+     })
   }
 
 
@@ -131,23 +113,23 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <div>
         <Route
           exact path='/'
-          render={props =>
-            <Main {...props}
-              setData={this.handleSetSignupData}
-              signup={this.handleSignup}
-              changeAbout={this.changeAbout}
-              changeBoard={this.changeBoard}
-              handleLogout={this.handleLogout}
-              site={this.state.site}
-              state={this.state}
-            />
-          }
+          render={ props =>
+                      <Main {...props}
+                        setData={this.handleSetSignupData}
+                        signup={this.handleSignup}
+                        changeAbout={this.changeAbout}
+                        changeBoard={this.changeBoard} 
+                        site={this.state.site}
+                        state={this.state}
+                      />
+                  }
         />
-
+        
         <Route
           path='/login'
           render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
