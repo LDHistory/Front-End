@@ -10,7 +10,7 @@ import './table.css'
 // 수정끝 ----------------------------------------------------------------------
 
 const Board = (props) => {
-    console.log('rownum test : ', props.list[50].rownum);
+    //console.log('rownum test : ', props.list[50].rownum);
     console.log('total count : ', props.totalCount);
 
     ////총 게시글 개수를 비구조화 할당하며 선언
@@ -18,7 +18,7 @@ const Board = (props) => {
 
 
     //한 페이지에 출력될 게시물 수, 페이지당 10개의 게시물
-    let countList = 10;
+    //let countList = 10;
 
 
     //한 화면에 출력될 페이지 수, 한 화면에 10개의 페이지를 출력
@@ -26,7 +26,7 @@ const Board = (props) => {
 
 
     //현재 페이지 번호
-    let currentPage = 5;
+    let currentPage = 7;
 
 
     
@@ -88,6 +88,8 @@ const Board = (props) => {
         }
         return arrTmp;
     }
+
+    
 
     
     const List = props.list.map((value, key) => 

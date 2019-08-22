@@ -231,15 +231,25 @@ export default function Main(props) {
           {/* {setBoard()} 로그인 안하면 board 안보이게..적용 시 위에 <Link>board</Link> 지우기*/}
         </Toolbar>
 
-        {/* // 수정시작 ---------------------------------------------------------------------- */}
-        {/* site 값 비교를 통해 컴포넌트 띄우기 위해 */}
         <main>
-          {(props.site === '' || props.site === 'about') ? <About /> : (props.site === 'boardwrite')? 
-                                          <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData} changeBoard={() => {props.changeBoard()}} ondataSubmit={() =>{ props.ondataSubmit() }} /> :
-                                                      <Board list={props.state.arr} changeWrite={() => {props.changeWrite()}} totalCount={props.state.totalCount} />  }
-        </main>
-        {/* // 수정끝 ---------------------------------------------------------------------- */}
 
+          {(props.site === '' || props.site === 'about') ? <About /> : (props.site === 'board') 
+
+                      ?
+                          <Board
+                          list={props.state.arr}
+                          changeWrite={() => {props.changeWrite()}}
+                          totalCount={props.state.totalCount}
+                          />
+                      :
+                          <BoardWrite
+                          handleSetBoardWriteData={props.handleSetBoardWriteData}
+                          changeBoard={() => {props.changeBoard()}}
+                          ondataSubmit={() =>{ props.ondataSubmit() }}
+                          />
+          }
+
+        </main>
       </Container>
       {/* Footer */}
       <footer className={classes.footer}>
