@@ -261,7 +261,16 @@ export default function Main(props) {
           </Switch>
           <Route
             path='/board'
-            render={() => <Board list={props.state.arr} changeWrite={() => { props.changeWrite() }} totalCount={props.state.totalCount} />}
+            render={() => 
+                <Board
+                  list={props.state.arr}
+                  changeWrite={() => { props.changeWrite() }}
+                  totalCount={props.state.totalCount}
+                  currentPage={props.state.currentPage}
+                  setCurrentPage={props.setCurrentPage}
+                  getBoardList={props.getBoardList}
+                />
+            }
           />
         </main>
       </Container>

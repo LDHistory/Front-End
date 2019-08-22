@@ -315,8 +315,10 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
-                site={this.state.site}
+                // site={this.state.site}
                 state={this.state}
+                setCurrentPage={this.handleSetCurrentPage}
+                getBoardList={this.handleGetBoardList}
               />
             }
           />
