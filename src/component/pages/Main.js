@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 
 import { About, Board } from './index';
+// 수정시작 ----------------------------------------------------------------------
+// BoardWrite 컴포넌트 사용을 위해 import
+import { BoardWrite } from './boardPages';
+// 수정끝 ----------------------------------------------------------------------
 //import { Route } from 'react-router-dom';
 
 function Copyright() {
@@ -166,9 +170,14 @@ export default function Main(props) {
           </Link>
         </Toolbar>
 
+        {/* // 수정시작 ---------------------------------------------------------------------- */}
+        {/* site 값 비교를 통해 컴포넌트 띄우기 위해 */}
         <main>
-          {(props.site === 'about') ? <About /> : <Board list={props.state.arr} />}
+          {(props.site === 'about') ? <About /> : (props.site === 'boardwrite')? 
+                                          <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData} changeBoard={() => {props.changeBoard()}} ondataSubmit={() =>{ props.ondataSubmit() }} /> :
+                                                      <Board list={props.state.arr} changeWrite={() => {props.changeWrite()}} />  }
         </main>
+        {/* // 수정끝 ---------------------------------------------------------------------- */}
 
       </Container>
       {/* Footer */}
