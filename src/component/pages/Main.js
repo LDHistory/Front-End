@@ -170,10 +170,7 @@ export default function Main(props) {
           >
             Bit Team 3
           </Typography>
-          {setLoginButton()}
-          {setLogoutButton()}
-          &nbsp;
-          {setJoinButton()} 
+
         </Toolbar>
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
 
