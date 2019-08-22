@@ -10,8 +10,8 @@ import './table.css'
 // 수정끝 ----------------------------------------------------------------------
 
 const Board = (props) => {
-    console.log(props.list[100].rownum);
-    console.log(props.totalCount);
+    console.log('rownum test : ', props.list[50].rownum);
+    console.log('total count : ', props.totalCount);
 
     ////총 게시글 개수를 비구조화 할당하며 선언
     const { totalCount } = props;
@@ -73,7 +73,6 @@ const Board = (props) => {
     const pageNumberList = () => {
         const arrTmp = [];
         for(let i=startPage; i<=endPage; i++) {
-            console.log(i);
             if(i === currentPage) {
                 arrTmp.push(<Link to='/board/:pageNum' style={{ textDecoration: 'none' }} key={i}><b>{i} </b></Link>);
                 // return (
@@ -90,38 +89,7 @@ const Board = (props) => {
         return arrTmp;
     }
 
-    // const pageNumberList = pageNumber.map((value, key) => 
-    // {
-    //     for(let i=startPage; i<=endPage; i++) {
-    //         console.log(i);
-    //         if(i === currentPage) {
-    //             return (
-    //                 <Link
-    //                     to='/board/:pageNum'
-    //                     style={{ textDecoration: 'none' }}
-    //                     key={key}
-    //                 >
-    //                     <b>
-    //                         [{value}] 
-    //                     </b>
-    //                 </Link>
-    //             )
-    //         }
-    //         else {
-    //             return (
-    //                 <Link
-    //                     to='/board/:pageNum'
-    //                     style={{ textDecoration: 'none' }}
-    //                     key={key}
-    //                 >
-    //                     [{value}] 
-    //                 </Link>
-    //             )
-    //         }
-
-    //     }
-    // });
-
+    
     const List = props.list.map((value, key) => 
     {
         return (
@@ -134,6 +102,7 @@ const Board = (props) => {
             />
         )
     });
+
     // 수정시작 ----------------------------------------------------------------------
     // 테이블 전반적인 구조를 위해 수정
     return (
@@ -141,7 +110,7 @@ const Board = (props) => {
             <br />
             <h1 align="center">3조 게시판 렛츠기릿</h1>
 
-            <table /*width="750" border="1"*/ class="rwd-table">
+            <table className="rwd-table">
                 <thead>
                     <tr>
                         <th width="60">글 번호</th>
