@@ -4,6 +4,11 @@ import React from 'react';
 import { BoardItem } from './boardPages';
 import { Link } from 'react-router-dom';
 
+// 수정시작 ----------------------------------------------------------------------
+//게시판 폼 css 임포트 코드
+import './table.css'
+// 수정끝 ----------------------------------------------------------------------
+
 const Board = (props) => {
     console.log(props.list[100].rownum);
     console.log(props.totalCount);
@@ -129,19 +134,20 @@ const Board = (props) => {
             />
         )
     });
-
+    // 수정시작 ----------------------------------------------------------------------
+    // 테이블 전반적인 구조를 위해 수정
     return (
         <div align="center">
             <br />
-            <h2 align="center">3조 게시판 렛츠기릿</h2>
+            <h1 align="center">3조 게시판 렛츠기릿</h1>
 
-            <table width="1000" border="1">
+            <table /*width="750" border="1"*/ class="rwd-table">
                 <thead>
                     <tr>
-                        <th>글 번호</th>
-                        <th>제   목</th>
-                        <th>이   름</th>
-                        <th>작성 일자</th>
+                        <th width="60">글 번호</th>
+                        <th width="350">제   목</th>
+                        <th width="150">이   름</th>
+                        <th width="190">작성 일자</th>
                     </tr>
                 </thead>
                 
@@ -149,6 +155,8 @@ const Board = (props) => {
                     {List}
                 </tbody>
             </table>
+            <br/>
+            <button onClick={()=>{props.changeWrite()}}>글쓰기</button>
             <br />
 
             <center>
@@ -157,5 +165,5 @@ const Board = (props) => {
         </div>
     );
 };
-
+    // 수정끝 ----------------------------------------------------------------------
 export default Board;

@@ -28,6 +28,17 @@ class App extends Component {
 
     //게시글 개수를 담는 변수
     totalCount: 0,
+    
+    // 수정시작 ----------------------------------------------------------------------
+    // 글쓰기에서 사용할 state 변수 선언  
+    write: {
+      title: '',
+      name: '',
+      password: '',
+      content: '',
+      date:'',
+    }
+  // 수정끝 ----------------------------------------------------------------------
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -81,6 +92,20 @@ class App extends Component {
     console.log(this.state.signup);
   }
 
+  // 수정시작 ----------------------------------------------------------------------
+  // BoardWrite 페이지에서 입력한 값을 state에 업데이트 하는 메서드
+  handleSetBoardWriteData = (e) => {
+    this.setState({
+      ...this.state,
+      write: {
+        ...this.state.write,
+        [e.target.name]: e.target.value,
+      }
+    })
+    console.log(this.state.write);
+  }
+  // 수정끝 ----------------------------------------------------------------------
+
   //회원 가입 버튼을 눌렀을 때 express서버로 data를 전송하는 메서드
   handleSignup = () => {
     return new Promise((resolve, reject) => { //axios 비동기 작업을 Promise then으로 동기적으로 바꿈
@@ -113,14 +138,84 @@ class App extends Component {
     })
   }
 
+
+  // 수정시작 ----------------------------------------------------------------------
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
+  // this.handleGetBoard(); 여기로 이동시킴,
+  // board로 이동할 때 마다 db데이터 값을 가져오기 위함
   changeBoard = () => {
      this.setState({
          site : 'board',
      })
   }
+  // 수정끝 ----------------------------------------------------------------------
 
 
+
+  // 수정시작 ----------------------------------------------------------------------
+  // Borad 페이지에서 글쓰기 페이지를 정하기 위해 site 상태값을 조정
+  changeWrite = () => {
+    this.setState({
+      site : 'boardwrite',
+    })
+  }
+  // 수정 끝----------------------------------------------------------------------
+
+
+  // 수정시작 ----------------------------------------------------------------------
+  // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
+  ondataSubmit = () => {
+    console.log(this.state.write.title);
+    console.log(this.state.write.name);
+    console.log(this.state.write.password);
+    console.log(this.state.write.content);
+    console.log(new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()))
+    
+    console.log(this.state.write);
+    
+
+    axios.post('http://13.58.55.98:5000/request/setBoard', {
+      name: this.state.write.name,
+      user: "ehd8266",
+      pw: this.state.write.password,
+      contents: this.state.write.content,
+      date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
+      title: this.state.write.title,
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          alert('글 등록 완료')
+          this.changeBoard();
+        }
+        else {
+          alert('글 등록 실패 이유는 아몰랑!')
+        }
+      })
+      .catch((res) => {
+        console.log(res.data);
+        console.log('전송실패');
+        alert('글 등록 실패 이유는 아몰랑!')
+      })
+
+
+    this.setState({
+      ...this.state,
+      write: {
+        title: '',
+        name: '',
+        password: '',
+        content: '',
+        date: '',
+      }
+    })
+
+  }
+  // 수정끝 ----------------------------------------------------------------------
+
+
+  // 수정시작 ----------------------------------------------------------------------
+  // this.handleGetBoard(); 를 changeBoard 안으로 이동
   componentDidMount() {
     //각각 setState가 실행되므로 2번 렌더링 되고 있다.
     //이것을 예방할 방법이 필요할 듯..?
@@ -149,6 +244,7 @@ class App extends Component {
       })
     })
   }
+  // 수정끝 ----------------------------------------------------------------------
 
 
   //--------------------------------------------
@@ -166,7 +262,15 @@ class App extends Component {
                         signup={this.handleSignup}
                         changeAbout={this.changeAbout}
                         changeBoard={this.changeBoard}
+      
+                        // 수정시작 ----------------------------------------------------------------------
+                        changeWrite={this.changeWrite}
+                        handleSetBoardWriteData={this.handleSetBoardWriteData}
+                        ondataSubmit={this.ondataSubmit}
+                        // 수정끝 ----------------------------------------------------------------------
+      
                         handleLogout={this.handleLogout} 
+      
                         site={this.state.site}
                         state={this.state}
                       />
