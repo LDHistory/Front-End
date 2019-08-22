@@ -37,7 +37,11 @@ class App extends Component {
       password: '',
       content: '',
       date:'',
-    }
+    },
+
+
+    //현재 페이지를 반환하는 변수
+    currentPage: 1,
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -120,9 +124,9 @@ class App extends Component {
     })
   }
 
-  //게시판 정보를 DB에서 가져오는 메서드
+  //모든 게시글 List를 가져오는 메소드 -> componentDidMount에서 호출하고 있음
   handleGetBoardList = () => {
-    axios.get('http://13.58.55.98:5000/request/getBoardList')
+    axios.get(`http://13.58.55.98:5000/request/getBoardList/${this.state.currentPage}`)
     .then((response) => {
       this.setState({
         arr: response.data,
@@ -130,14 +134,20 @@ class App extends Component {
     })
   }
 
+  handleSetCurrentPage = (e) => {
+    this.setState({
+      ...this.state,
+      currentPage: e,
+    })
+  }
+
+  //Start state의 site 값 변경 메소드들-----------------------
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
   changeAbout = () => {
     this.setState({
         site : 'about',
     })
   }
-
-
 
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
   // this.handleGetBoard(); 여기로 이동시킴,
@@ -148,13 +158,14 @@ class App extends Component {
      })
   }
 
-
   // Borad 페이지에서 글쓰기 페이지를 정하기 위해 site 상태값을 조정
   changeWrite = () => {
     this.setState({
       site : 'boardwrite',
     })
   }
+  //End state의 site 값 변경 메소드들-----------------------
+
 
 
   // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
@@ -245,13 +256,11 @@ class App extends Component {
                         signup={this.handleSignup}
                         changeAbout={this.changeAbout}
                         changeBoard={this.changeBoard}
-      
-                        // 수정시작 ----------------------------------------------------------------------
+
                         changeWrite={this.changeWrite}
                         handleSetBoardWriteData={this.handleSetBoardWriteData}
                         ondataSubmit={this.ondataSubmit}
-                        // 수정끝 ----------------------------------------------------------------------
-      
+
                         handleLogout={this.handleLogout} 
       
                         site={this.state.site}
@@ -269,6 +278,7 @@ class App extends Component {
           path='/join'
           render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
         />
+
       </div>
     );
   }
