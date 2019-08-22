@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Container from '@material-ui/core/Container';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -88,24 +89,28 @@ const memberPosts = [
     age: 'Nov 23',
     description:
       '저희 블로그에 오신것을 환영합니다!',
+    site: 'https://aridom.tistory.com'
   },
   {
     name: '김기범',
     age: 'Nov 11',
     description:
       '대현이형 팬 입니다.',
+    site: 'https://charming-jung.tistory.com/'
   },
   {
     name: '신기한',
     age: 'Nov 11',
     description:
       '연초 최대 몇 까지 가능하십니까?',
+    site: 'https://github.com/sinkihan?tab=repositories'
   },
   {
     name: '임성환',
     age: 'Nov 11',
     description:
       '수영 안 쉬고 몇 km 가능하십니까?',
+    site: 'https://hwan1001.tistory.com/'
   },
 ];
 
@@ -144,10 +149,12 @@ export default function About(props) {
           {/* End main featured post */}
           {/* Sub featured posts */}
           <Grid container spacing={4} className={classes.cardGrid}>
-            {memberPosts.map(post => (
+            {memberPosts.map((post, key) => (
               <Grid item key={post.name} xs={12} md={6}>
                 <CardActionArea component="a">
-                  <Card className={classes.card}>
+                  <Card className={classes.card} onClick={()=>{
+                    window.location.href=post.site
+                  }}>
                     <div className={classes.cardDetails}>
                       <CardContent>
                         <Typography component="h2" variant="h5">
@@ -164,8 +171,9 @@ export default function About(props) {
                     <Hidden xsDown>
                       <CardMedia
                         className={classes.cardMedia}
-                        image="https://source.unsplash.com/random"
-                        title="Image title"
+                        image={require(`../../Image/character${key+1}.gif`)}
+                        title={post.image}
+                        style={{paddingTop:'32%'}}
                       />
                     </Hidden>
                   </Card>
@@ -174,7 +182,7 @@ export default function About(props) {
             ))}
           </Grid>
           {/* End sub featured posts */}
-         
+
         </main>
       </Container>
     </React.Fragment>
