@@ -247,6 +247,9 @@ export default function Main(props) {
                           list={props.state.arr}
                           changeWrite={() => {props.changeWrite()}}
                           totalCount={props.state.totalCount}
+                          setCurrentPage={props.setCurrentPage}
+                          currentPage={props.state.currentPage}
+                          getBoardList={props.getBoardList}
                           />
                       :
                           <BoardWrite
