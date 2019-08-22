@@ -54,8 +54,16 @@ class App extends Component {
     })
   }
 
-
-
+  //로그아웃 기능을 하는 메서드
+  handleLogout = () => {
+    this.setState({
+      ...this.state,
+      signin : {
+        email: '',
+        pw: '',
+      }
+    })
+  }
 
   //회원 가입 폼에서 입력한 값을 state에 업데이트 하는 메서드
   handleSetSignupData = (e) => {
@@ -149,7 +157,8 @@ class App extends Component {
                         setData={this.handleSetSignupData}
                         signup={this.handleSignup}
                         changeAbout={this.changeAbout}
-                        changeBoard={this.changeBoard} 
+                        changeBoard={this.changeBoard}
+                        handleLogout={this.handleLogout} 
                         site={this.state.site}
                         state={this.state}
                       />
