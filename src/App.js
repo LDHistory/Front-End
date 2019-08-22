@@ -7,7 +7,7 @@ import { Signin, Signup, Main } from './component/pages';
 class App extends Component {
 
   state = {
-    site: 'about',
+    site: '',
 
     signin: {
       email: '',
@@ -21,11 +21,16 @@ class App extends Component {
       pw: '',
     },
 
+    //게시글 전체 목록을 담을 배열
     arr: [
       
     ],
-  // 수정시작 ----------------------------------------------------------------------
-  // 글쓰기에서 사용할 state 변수 선언  
+
+    //게시글 개수를 담는 변수
+    totalCount: 0,
+    
+    // 수정시작 ----------------------------------------------------------------------
+    // 글쓰기에서 사용할 state 변수 선언  
     write: {
       title: '',
       name: '',
@@ -117,7 +122,7 @@ class App extends Component {
   }
 
   //게시판 정보를 DB에서 가져오는 메서드
-  handleGetBoard = () => {
+  handleGetBoardList = () => {
     axios.get('http://13.58.55.98:5000/request/getBoardList')
     .then((response) => {
       this.setState({
@@ -212,7 +217,9 @@ class App extends Component {
   // 수정시작 ----------------------------------------------------------------------
   // this.handleGetBoard(); 를 changeBoard 안으로 이동
   componentDidMount() {
-    this.handleGetBoard();
+    //각각 setState가 실행되므로 2번 렌더링 되고 있다.
+    //이것을 예방할 방법이 필요할 듯..?
+    this.handleGetBoardList();
     this.handleTotalPage();
   }
 
@@ -231,22 +238,24 @@ class App extends Component {
   handleTotalPage = () => {
     axios.get('http://13.58.55.98:5000/request/getBoardCount')
     .then((response) => {
-      console.log('게시글 개수.. string 타입이므로 parsing하기 : ', response.data);
+      this.setState({
+        ...this.state,
+        totalCount: response.data,
+      })
     })
   }
   // 수정끝 ----------------------------------------------------------------------
 
 
-
-
   //--------------------------------------------
+
 
   render() {
 
     return (
       <div>
         <Route
-          exact path='/'
+          exact path={`/${this.state.site}`}
           render={ props =>
                       <Main {...props}
                         setData={this.handleSetSignupData}
