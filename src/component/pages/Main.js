@@ -151,6 +151,26 @@ export default function Main(props) {
     }
   }
 
+  // function setBoard() {
+  //  const checkInfo = props.state.signin;
+  //  if (checkInfo.email !== '' && checkInfo.pw !== ''){
+  //    return <Link
+  //            color="inherit"
+  //            noWrap
+  //            variant="body2"
+  //            onClick={() => {
+  //              props.changeBoard();
+  //              props.history.push('/board');
+  //            }}
+  //            className={classes.toolbarLink}
+  //          >
+  //            Board
+  //          </Link>
+  //  } else {
+  //    return null;
+  //  }
+  // }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -183,6 +203,7 @@ export default function Main(props) {
             variant="body2"
             onClick={() => {
               props.changeAbout();
+              props.history.push('/about');
             }}
             className={classes.toolbarLink}
           >
@@ -194,16 +215,19 @@ export default function Main(props) {
             variant="body2"
             onClick={() => {
               props.changeBoard();
+              props.history.push('/board');
             }}
 
             className={classes.toolbarLink}
           >
             Board
           </Link>
+
+          {/* {setBoard()} */}
         </Toolbar>
 
         <main>
-          {(props.site === 'about') ? <About /> : <Board list={props.state.arr} />}
+          {(props.site === '' || props.site === 'about') ? <About /> : <Board list={props.state.arr} totalCount={props.state.totalCount} />}
         </main>
 
       </Container>

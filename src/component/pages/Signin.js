@@ -106,7 +106,7 @@ export default function SignIn(props) {
             onClick={() => { 
               props.signin().then((check) => {
                 if(check) { //check 값이 true면 main페이지로 이동
-                  props.history.replace('/');
+                  props.history.push('/');
                 } else {
                   alert('아이디와 비밀번호를 확인하세요');
                 }
@@ -119,8 +119,7 @@ export default function SignIn(props) {
 
             <Grid item xs>
               <Link variant="body2" onClick={() => {
-                props.changeAbout();
-                props.history.replace('/');
+                props.history.push('/');
               }}
               >
                 메인 페이지로
@@ -129,7 +128,7 @@ export default function SignIn(props) {
             
             <Grid item>
               <Link variant="body2" onClick={() => {
-                props.history.replace('/join')
+                props.history.push('/join')
               }}>
                 {"계정이 없다면? 회원가입"}
               </Link>
