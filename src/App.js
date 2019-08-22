@@ -6,6 +6,12 @@ import { Signin, Signup, Main } from './component/pages';
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.handleGetBoardList();
+    this.handleTotalPage();
+  }
+
   state = {
     site: '',
 
@@ -124,21 +130,24 @@ class App extends Component {
     })
   }
 
-  //모든 게시글 List를 가져오는 메소드 -> componentDidMount에서 호출하고 있음
+  //모든 게시글 List를 가져오는 메소드
   handleGetBoardList = () => {
     axios.get(`http://13.58.55.98:5000/request/getBoardList/${this.state.currentPage}`)
     .then((response) => {
       this.setState({
+        ...this.state,
         arr: response.data,
       });
+      console.log(this.state.arr);
     })
   }
 
-  handleSetCurrentPage = (e) => {
+  handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
-      currentPage: e,
+      currentPage: num,
     })
+    console.log(this.state.currentPage);
   }
 
   //Start state의 site 값 변경 메소드들-----------------------
@@ -218,15 +227,6 @@ class App extends Component {
   }
 
 
-  // this.handleGetBoard(); 를 changeBoard 안으로 이동
-  componentDidMount() {
-    //각각 setState가 실행되므로 2번 렌더링 되고 있다.
-    //이것을 예방할 방법이 필요할 듯..?
-    this.handleGetBoardList();
-    this.handleTotalPage();
-  }
-
-
 
   //--------------------------------------------
   //페이징 처리 로직
@@ -242,6 +242,15 @@ class App extends Component {
     })
   }
   //--------------------------------------------
+
+
+  // this.handleGetBoard(); 를 changeBoard 안으로 이동
+  componentDidMount() {
+    //각각 setState가 실행되므로 2번 렌더링 되고 있다.
+    //이것을 예방할 방법이 필요할 듯..?
+    // this.handleGetBoardList();
+    // this.handleTotalPage();
+  }
 
 
   render() {
@@ -265,6 +274,9 @@ class App extends Component {
       
                         site={this.state.site}
                         state={this.state}
+
+                        setCurrentPage={this.handleSetCurrentPage}
+                        getBoardList={this.handleGetBoardList}
                       />
                   }
         />

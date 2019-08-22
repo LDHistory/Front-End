@@ -4,14 +4,11 @@ import React from 'react';
 import { BoardItem } from './boardPages';
 import { Link } from 'react-router-dom';
 
-// 수정시작 ----------------------------------------------------------------------
-//게시판 폼 css 임포트 코드
 import './table.css'
-// 수정끝 ----------------------------------------------------------------------
 
 const Board = (props) => {
-    //console.log('rownum test : ', props.list[50].rownum);
-    console.log('total count : ', props.totalCount);
+    // console.log('rownum test : ', props.list[8].rownum);
+    // console.log('total count : ', props.totalCount);
 
     ////총 게시글 개수를 비구조화 할당하며 선언
     const { totalCount } = props;
@@ -26,7 +23,8 @@ const Board = (props) => {
 
 
     //현재 페이지 번호
-    let currentPage = 7;
+    let currentPage = props.currentPage;
+    //console.log('현재 currentPage 값은? : ', currentPage);
 
 
     
@@ -35,7 +33,7 @@ const Board = (props) => {
     let totalPage = totalCount / 10;
     if(totalCount % 10 > 0) {
         totalPage = Math.ceil(totalPage);
-        console.log('올림을 했다면 총 페이지의 수는? ', totalPage);
+        //console.log('올림을 했다면 총 페이지의 수는? ', totalPage);
     }
 
 
@@ -50,11 +48,11 @@ const Board = (props) => {
 
     //시작 페이지 구하는 식
     let startPage = Math.floor(((currentPage - 1) / 10)) * 10 + 1;
-    console.log('startPage : ', startPage);
+    //console.log('startPage : ', startPage);
 
     //끝 페이지 구하는 식
     let endPage = startPage + countPage - 1;
-    console.log('endPage : ', endPage);
+    //console.log('endPage : ', endPage);
 
     //마지막 페이지가 ~0 단위로 안떨어지는 경우에는 마지막 페이지를 총 페이지수로 대체해야 함
     if(endPage > totalPage) {
@@ -74,16 +72,37 @@ const Board = (props) => {
         const arrTmp = [];
         for(let i=startPage; i<=endPage; i++) {
             if(i === currentPage) {
-                arrTmp.push(<Link to='/board/:pageNum' style={{ textDecoration: 'none' }} key={i}><b>{i} </b></Link>);
-                // return (
-                //     <Link to='/board/:pageNum' style={{ textDecoration: 'none' }}><b>[{i}] </b></Link>
-                // )
+                arrTmp.push(
+                    <Link
+                        to={`/board`}
+                        style={{ textDecoration: 'none' }}
+                        key={i}
+                        onClick={ async () => {
+                            //자바스크립트는 함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
+                            //getBoardList()가 먼저 호출되어서 setCurrentPage의 setState가 뒤늦게 됨.. 그래서 두번클릭해야 나옴..
+                            await props.setCurrentPage(i);
+                            await props.getBoardList(currentPage);
+                        }}
+                    >
+                        <b> {i} </b>
+                    </Link>
+                );
             }
             else {
-                arrTmp.push(<Link to='/board/:pageNum' style={{ textDecoration: 'none' }} key={i}>[{i}] </Link>);
-                // return (
-                //     <Link to='/board/:pageNum' style={{ textDecoration: 'none' }}>[{i}] </Link>
-                // )
+                arrTmp.push(
+                    <Link
+                        // /${i}
+                        to={`/board`}
+                        style={{ textDecoration: 'none' }}
+                        key={i}
+                        onClick={ async () => {                            
+                            await props.setCurrentPage(i);
+                            await props.getBoardList(currentPage);
+                        }}
+                    >
+                         [{i}] 
+                    </Link>
+                );
             }
         }
         return arrTmp;
