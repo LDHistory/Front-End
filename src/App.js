@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
-import { Signin, Signup, Main } from './component/pages';
+import { Signin, Signup, Main, About, Board } from './component/pages';
 
 class App extends Component {
 
@@ -34,15 +34,15 @@ class App extends Component {
 
     //게시글 개수를 담는 변수
     totalCount: 0,
-    
-    
+
+
     // 글쓰기에서 사용할 state 변수 선언  
     write: {
       title: '',
       name: '',
       password: '',
       content: '',
-      date:'',
+      date: '',
     },
 
 
@@ -69,12 +69,12 @@ class App extends Component {
         email: this.state.signin.email,
         pw: this.state.signin.pw,
       })
-      .then(response => { 
-        resolve(response.data);
-      })
-      .catch(response => { 
-        reject(response.data);
-      })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(response => {
+          reject(response.data);
+        })
     })
   }
 
@@ -82,7 +82,7 @@ class App extends Component {
   handleLogout = () => {
     this.setState({
       ...this.state,
-      signin : {
+      signin: {
         email: '',
         pw: '',
       }
@@ -124,9 +124,9 @@ class App extends Component {
         email: this.state.signup.email,
         pw: this.state.signup.pw,
       })
-      .then((response) => {
-        resolve(response.data);
-      })
+        .then((response) => {
+          resolve(response.data);
+        })
     })
   }
 
@@ -154,7 +154,7 @@ class App extends Component {
   //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
   changeAbout = () => {
     this.setState({
-        site : 'about',
+      site: 'about',
     })
   }
 
@@ -162,15 +162,15 @@ class App extends Component {
   // this.handleGetBoard(); 여기로 이동시킴,
   // board로 이동할 때 마다 db데이터 값을 가져오기 위함
   changeBoard = () => {
-     this.setState({
-         site : 'board',
-     })
+    this.setState({
+      site: 'board',
+    })
   }
 
   // Borad 페이지에서 글쓰기 페이지를 정하기 위해 site 상태값을 조정
   changeWrite = () => {
     this.setState({
-      site : 'boardwrite',
+      site: 'boardwrite',
     })
   }
   //End state의 site 값 변경 메소드들-----------------------
@@ -184,9 +184,9 @@ class App extends Component {
     console.log(this.state.write.password);
     console.log(this.state.write.content);
     console.log(new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()))
-    
+
     console.log(this.state.write);
-    
+
 
     axios.post('http://13.58.55.98:5000/request/setBoard', {
       name: this.state.write.name,
@@ -234,12 +234,12 @@ class App extends Component {
   //한 페이지에 출력될 게시물 수(10, countList)로 나눈 값을 반환한다.
   handleTotalPage = () => {
     axios.get('http://13.58.55.98:5000/request/getBoardCount')
-    .then((response) => {
-      this.setState({
-        ...this.state,
-        totalCount: response.data,
+      .then((response) => {
+        this.setState({
+          ...this.state,
+          totalCount: response.data,
+        })
       })
-    })
   }
   //--------------------------------------------
 
@@ -257,40 +257,70 @@ class App extends Component {
 
     return (
       <div>
+        <Switch>
         <Route
-          exact path={`/${this.state.site}`}
-          render={ props =>
-                      <Main {...props}
-                        setData={this.handleSetSignupData}
-                        signup={this.handleSignup}
-                        changeAbout={this.changeAbout}
-                        changeBoard={this.changeBoard}
+//           exact path={`/${this.state.site}`}
+//           render={ props =>
+//                       <Main {...props}
+//                         setData={this.handleSetSignupData}
+//                         signup={this.handleSignup}
+//                         changeAbout={this.changeAbout}
+//                         changeBoard={this.changeBoard}
 
-                        changeWrite={this.changeWrite}
-                        handleSetBoardWriteData={this.handleSetBoardWriteData}
-                        ondataSubmit={this.ondataSubmit}
+//                         changeWrite={this.changeWrite}
+//                         handleSetBoardWriteData={this.handleSetBoardWriteData}
+//                         ondataSubmit={this.ondataSubmit}
 
-                        handleLogout={this.handleLogout} 
+//                         handleLogout={this.handleLogout} 
       
-                        site={this.state.site}
-                        state={this.state}
+//                         site={this.state.site}
+//                         state={this.state}
 
-                        setCurrentPage={this.handleSetCurrentPage}
-                        getBoardList={this.handleGetBoardList}
-                      />
-                  }
-        />
+//                         setCurrentPage={this.handleSetCurrentPage}
+//                         getBoardList={this.handleGetBoardList}
+//                       />
+//                   }
+//         />
         
-        <Route
-          path='/login'
-          render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
-        />
+//         <Route
+//           path='/login'
+//           render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
+//         />
 
-        <Route
-          path='/join'
-          render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
-        />
+//         <Route
+//           path='/join'
+//           render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
+//         />
 
+            path='/login'
+            render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
+          />
+
+          <Route
+            path='/join'
+            render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
+          />
+          <Route
+            path="/"
+            render={props =>
+              <Main {...props}
+                setData={this.handleSetSignupData}
+                signup={this.handleSignup}
+                changeAbout={this.changeAbout}
+                changeBoard={this.changeBoard}
+
+                changeWrite={this.changeWrite}
+                handleSetBoardWriteData={this.handleSetBoardWriteData}
+                ondataSubmit={this.ondataSubmit}
+
+                handleLogout={this.handleLogout}
+
+                site={this.state.site}
+                state={this.state}
+              />
+            }
+          />
+          </Switch>
       </div>
     );
   }
