@@ -123,7 +123,7 @@ export default function Main(props) {
             variant="outlined"
             size="small"
             onClick={() => {
-              props.history.replace('/login');
+              props.history.push('/login');
             }}
           >
             로그인
@@ -133,7 +133,7 @@ export default function Main(props) {
             variant="outlined"
             size="small"
             onClick={() => {
-              props.history.replace('/join');
+              props.history.push('/join');
             }}
           >
             회원가입
