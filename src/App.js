@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
-import { Signin, Signup, Main, About, Board } from './component/pages';
+import { Signin, Signup, Main } from './component/pages';
 
 class App extends Component {
 
@@ -133,13 +133,13 @@ class App extends Component {
   //모든 게시글 List를 가져오는 메소드
   handleGetBoardList = () => {
     axios.get(`http://13.58.55.98:5000/request/getBoardList/${this.state.currentPage}`)
-    .then((response) => {
-      this.setState({
-        ...this.state,
-        arr: response.data,
-      });
-      console.log(this.state.arr);
-    })
+      .then((response) => {
+        this.setState({
+          ...this.state,
+          arr: response.data,
+        });
+        console.log(this.state.arr);
+      })
   }
 
   handleSetCurrentPage = (num) => {
@@ -196,11 +196,12 @@ class App extends Component {
       date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
       title: this.state.write.title,
     })
-      .then((res) => {
+      .then(async (res) => {    /* site change 부분 제거 */
         console.log(res);
         if (res.data) {
           alert('글 등록 완료')
-          this.changeBoard();
+          await this.handleGetBoardList();
+          await this.handleTotalPage();
         }
         else {
           alert('글 등록 실패 이유는 아몰랑!')
@@ -258,39 +259,39 @@ class App extends Component {
     return (
       <div>
         <Switch>
-        <Route
-//           exact path={`/${this.state.site}`}
-//           render={ props =>
-//                       <Main {...props}
-//                         setData={this.handleSetSignupData}
-//                         signup={this.handleSignup}
-//                         changeAbout={this.changeAbout}
-//                         changeBoard={this.changeBoard}
+          <Route
+            //           exact path={`/${this.state.site}`}
+            //           render={ props =>
+            //                       <Main {...props}
+            //                         setData={this.handleSetSignupData}
+            //                         signup={this.handleSignup}
+            //                         changeAbout={this.changeAbout}
+            //                         changeBoard={this.changeBoard}
 
-//                         changeWrite={this.changeWrite}
-//                         handleSetBoardWriteData={this.handleSetBoardWriteData}
-//                         ondataSubmit={this.ondataSubmit}
+            //                         changeWrite={this.changeWrite}
+            //                         handleSetBoardWriteData={this.handleSetBoardWriteData}
+            //                         ondataSubmit={this.ondataSubmit}
 
-//                         handleLogout={this.handleLogout} 
-      
-//                         site={this.state.site}
-//                         state={this.state}
+            //                         handleLogout={this.handleLogout} 
 
-//                         setCurrentPage={this.handleSetCurrentPage}
-//                         getBoardList={this.handleGetBoardList}
-//                       />
-//                   }
-//         />
-        
-//         <Route
-//           path='/login'
-//           render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
-//         />
+            //                         site={this.state.site}
+            //                         state={this.state}
 
-//         <Route
-//           path='/join'
-//           render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
-//         />
+            //                         setCurrentPage={this.handleSetCurrentPage}
+            //                         getBoardList={this.handleGetBoardList}
+            //                       />
+            //                   }
+            //         />
+
+            //         <Route
+            //           path='/login'
+            //           render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
+            //         />
+
+            //         <Route
+            //           path='/join'
+            //           render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
+            //         />
 
             path='/login'
             render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
@@ -322,7 +323,7 @@ class App extends Component {
               />
             }
           />
-          </Switch>
+        </Switch>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import { BoardItem } from './boardPages';
 import { Link } from 'react-router-dom';
 
 import './table.css'
+import './button.css'
 
 const Board = (props) => {
     // console.log('rownum test : ', props.list[8].rownum);
@@ -73,6 +74,7 @@ const Board = (props) => {
         for(let i=startPage; i<=endPage; i++) {
             if(i === currentPage) {
                 arrTmp.push(
+                    <button className="button2" key={i}>
                     <Link
                         to={`/board`}
                         style={{ textDecoration: 'none' }}
@@ -86,10 +88,12 @@ const Board = (props) => {
                     >
                         <b> {i} </b>
                     </Link>
+                    </button>
                 );
             }
             else {
                 arrTmp.push(
+                    <button className="button2" key={i} >
                     <Link
                         // /${i}
                         to={`/board`}
@@ -102,6 +106,7 @@ const Board = (props) => {
                     >
                          [{i}] 
                     </Link>
+                    </button>
                 );
             }
         }
@@ -131,12 +136,12 @@ const Board = (props) => {
             <br />
             <h1 align="center">3조 게시판 렛츠기릿</h1>
 
-            <table className="rwd-table">
+            <table className="rwd-table" border="1">
                 <thead>
                     <tr>
-                        <th width="60">글 번호</th>
-                        <th width="350">제   목</th>
-                        <th width="150">이   름</th>
+                        <th width="90">글 번호</th>
+                        <th width="340">제   목</th>
+                        <th width="130">이   름</th>
                         <th width="190">작성 일자</th>
                     </tr>
                 </thead>
@@ -146,7 +151,7 @@ const Board = (props) => {
                 </tbody>
             </table>
             <br/>
-            <button onClick={()=>{props.changeWrite()}}>글쓰기</button>
+            <button className="button" onClick={()=>{props.props.history.push('/board/write')}}>글쓰기</button>
             <br />
 
             <center>

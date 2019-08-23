@@ -231,6 +231,7 @@ export default function Main(props) {
           {/* {setBoard()} 로그인 안하면 board 안보이게..적용 시 위에 <Link>board</Link> 지우기*/}
         </Toolbar>
 
+            {/* main안 내용 Route 부분 추가 */}
         <main>
           <Switch>
             <Route exact path='/about' component={About}></Route>
@@ -259,10 +260,21 @@ export default function Main(props) {
                           />
           } */}
           </Switch>
+          <Switch>
           <Route
-            path='/board'
-            render={() => 
+              path='/board/write'
+              render={() => 
+                <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData}
+                  changeBoard={() => { props.changeBoard() }}
+                  ondataSubmit={() => { props.ondataSubmit() }}
+                  props={props} />
+              }
+            />
+            <Route
+              path='/board'
+              render={() =>
                 <Board
+                  props={props}
                   list={props.state.arr}
                   changeWrite={() => { props.changeWrite() }}
                   totalCount={props.state.totalCount}
@@ -270,8 +282,10 @@ export default function Main(props) {
                   setCurrentPage={props.setCurrentPage}
                   getBoardList={props.getBoardList}
                 />
-            }
-          />
+              } />
+          </Switch>
+
+
         </main>
       </Container>
       {/* Footer */}
