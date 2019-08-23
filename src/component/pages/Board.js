@@ -12,7 +12,7 @@ const Board = (props) => {
 
 
     //한 페이지에 출력될 게시물 수, 페이지당 10개의 게시물
-    //let countList = 10;
+    let countList = 10;
 
 
     //한 화면에 출력될 페이지 수, 한 화면에 10개의 페이지를 출력
@@ -32,8 +32,8 @@ const Board = (props) => {
     
     //totalPage 총 페이지의 수를 정하는 변수. 연산을 통해 변해야 하므로 let으로 선언.
     //한 페이지당 10개의 게시글이 있으므로 10으로 나눈 값에 나머지가 있을 경우 올림을 해서 총 페이지수를 정한다.
-    let totalPage = totalCount / countPage;
-    if(totalCount % countPage > 0) {
+    let totalPage = totalCount / countList;
+    if(totalCount % countList > 0) {
         totalPage = Math.ceil(totalPage);
         //console.log('올림을 했다면 총 페이지의 수는? ', totalPage);
     }
