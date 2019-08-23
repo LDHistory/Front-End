@@ -141,6 +141,7 @@ class App extends Component {
       })
   }
 
+  //현재 페이지를 setState하는 메소드, 숫자 버튼 클릭시 해당 숫자를 인자값으로 가져옴
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
@@ -281,7 +282,6 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
-                // site={this.state.site}
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
                 getBoardList={this.handleGetBoardList}

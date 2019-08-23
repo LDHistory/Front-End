@@ -234,7 +234,8 @@ export default function Main(props) {
             {/* main안 내용 Route 부분 추가 */}
         <main>
           <Switch>
-            <Route exact path='/about' component={About} />
+            
+            <Route path='/about' component={About} />
 
             <Route
               path='/board/write'
@@ -260,7 +261,8 @@ export default function Main(props) {
               }
             />
 
-            <Route exact path='/' component={About}></Route>
+            <Route path='/' component={About}></Route>
+
           </Switch>
         </main>
       </Container>
