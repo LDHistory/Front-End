@@ -138,7 +138,6 @@ class App extends Component {
           ...this.state,
           arr: response.data,
         });
-        console.log(this.state.arr);
       })
   }
 
@@ -147,7 +146,6 @@ class App extends Component {
       ...this.state,
       currentPage: num,
     })
-    console.log(this.state.currentPage);
   }
 
   //Start state의 site 값 변경 메소드들-----------------------
@@ -260,39 +258,6 @@ class App extends Component {
       <div>
         <Switch>
           <Route
-            //           exact path={`/${this.state.site}`}
-            //           render={ props =>
-            //                       <Main {...props}
-            //                         setData={this.handleSetSignupData}
-            //                         signup={this.handleSignup}
-            //                         changeAbout={this.changeAbout}
-            //                         changeBoard={this.changeBoard}
-
-            //                         changeWrite={this.changeWrite}
-            //                         handleSetBoardWriteData={this.handleSetBoardWriteData}
-            //                         ondataSubmit={this.ondataSubmit}
-
-            //                         handleLogout={this.handleLogout} 
-
-            //                         site={this.state.site}
-            //                         state={this.state}
-
-            //                         setCurrentPage={this.handleSetCurrentPage}
-            //                         getBoardList={this.handleGetBoardList}
-            //                       />
-            //                   }
-            //         />
-
-            //         <Route
-            //           path='/login'
-            //           render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
-            //         />
-
-            //         <Route
-            //           path='/join'
-            //           render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
-            //         />
-
             path='/login'
             render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
           />
