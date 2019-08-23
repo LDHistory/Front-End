@@ -1,17 +1,13 @@
 import React from 'react';
-//import { Route, Link } from 'react-router-dom';
-//import { BoardWrite } from './boardPages';
 import { BoardItem } from './boardPages';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './table.css'
 import './button.css'
 
 const Board = (props) => {
-    // console.log('rownum test : ', props.list[8].rownum);
-    // console.log('total count : ', props.totalCount);
 
-    ////총 게시글 개수를 비구조화 할당하며 선언
+    //총 게시글 개수를 비구조화 할당하며 선언
     const { totalCount } = props;
 
 
@@ -23,16 +19,21 @@ const Board = (props) => {
     let countPage = 10;
 
 
-    //현재 페이지 번호
-    let currentPage = props.currentPage;
-    //console.log('현재 currentPage 값은? : ', currentPage);
+    //현재 페이지 번호 지정
+    let currentPage;
+    if(props.match.params.currentPage === undefined) {
+        currentPage = props.props.state.currentPage;
+    }
+    else {
+        currentPage = parseInt(props.match.params.currentPage);
+    }
 
 
     
     //totalPage 총 페이지의 수를 정하는 변수. 연산을 통해 변해야 하므로 let으로 선언.
     //한 페이지당 10개의 게시글이 있으므로 10으로 나눈 값에 나머지가 있을 경우 올림을 해서 총 페이지수를 정한다.
-    let totalPage = totalCount / 10;
-    if(totalCount % 10 > 0) {
+    let totalPage = totalCount / countPage;
+    if(totalCount % countPage > 0) {
         totalPage = Math.ceil(totalPage);
         //console.log('올림을 했다면 총 페이지의 수는? ', totalPage);
     }
@@ -48,7 +49,7 @@ const Board = (props) => {
     //ex2) currentPage가 13일 때, startPage=11  / endPage=20
 
     //시작 페이지 구하는 식
-    let startPage = Math.floor(((currentPage - 1) / 10)) * 10 + 1;
+    let startPage = Math.floor(((currentPage - 1) / countPage)) * countPage + 1;
     //console.log('startPage : ', startPage);
 
     //끝 페이지 구하는 식
@@ -73,7 +74,7 @@ const Board = (props) => {
             arrTmp.push(
                 <button className="button2" key={'a'}>
                     <Link
-                        to={`/board`}
+                        to={`/board/1`}
                         style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(1);
@@ -90,7 +91,7 @@ const Board = (props) => {
             arrTmp.push(
                 <button className="button2" key={'b'}>
                     <Link
-                        to={`/board`}
+                        to={`/board/${currentPage-1}`}
                         style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(currentPage-1);
@@ -112,10 +113,10 @@ const Board = (props) => {
                 arrTmp.push(
                     <button className="button2" key={i}>
                         <Link
-                            to={`/board`}
+                            to={`/board/${i}`}
                             style={{ textDecoration: 'none' }}
                             onClick={ async () => {
-                                //자바스크립트는 함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
+                                //함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
                                 //getBoardList()가 먼저 호출되어서 setCurrentPage의 setState가 뒤늦게 됨.. 그래서 두번클릭해야 나옴..
                                 await props.setCurrentPage(i);
                                 await props.getBoardList(currentPage);
@@ -130,7 +131,7 @@ const Board = (props) => {
                 arrTmp.push(
                     <button className="button2" key={i} >
                         <Link
-                            to={`/board`}
+                            to={`/board/${i}`}
                             style={{ textDecoration: 'none' }}
                             onClick={ async () => {
                                 await props.setCurrentPage(i);
@@ -154,7 +155,7 @@ const Board = (props) => {
             arrTmp.push(
                 <button className="button2" key={'c'}>
                     <Link
-                        to={`/board`}
+                        to={`/board/${currentPage+1}`}
                         style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(currentPage+1);
@@ -170,7 +171,7 @@ const Board = (props) => {
             arrTmp.push(
                 <button className="button2" key={'d'}>
                     <Link
-                        to={`/board`}
+                        to={`/board/${totalPage}`}
                         style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(totalPage);
@@ -224,9 +225,6 @@ const Board = (props) => {
             <br />
 
             <center>
-                <Switch>
-                    <Route></Route>
-                </Switch>
                 {first_prev()}
                 {pageNumberList()}
                 {next_end()}
