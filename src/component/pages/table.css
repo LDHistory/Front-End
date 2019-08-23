@@ -64,13 +64,14 @@ h1 {
   font-weight: "normal";
   font-size: 30pt;
   letter-spacing: -1px;
-  color: #34495E;
+  color: #34495E; 
+  
 }
 
 .rwd-table {
   background: #34495E;   /* 테이블 배경 */
   color: #fff;   /* 테이블 hd 글자 색 */
-  border-radius: .4em;
+  border-radius: 0.9em;
   overflow: hidden;
 }
 .rwd-table tr {
@@ -89,6 +90,8 @@ h1 {
 }
 .rwd-table th,
 .rwd-table td:before {
-  color: #dd5;   /* th 태그 색깔 */
+  /*color: #dd5;*/   /* th 태그 색깔 */
+  color : #000;
+  background: rgb(72, 100, 129);
 } 
 /* // 수정끝 ---------------------------------------------------------------------- */

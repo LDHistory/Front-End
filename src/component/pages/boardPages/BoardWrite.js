@@ -46,10 +46,15 @@ const BoardWrite = (props) => {
                     </tr>
                     <tr>
                         <td colSpan="5" align="center">
-                            <button onClick={()=>{
-                                props.ondataSubmit()
+                            <button onClick={ async ()=>{
+                                await props.ondataSubmit()
+                                
+                                
+                                // 등록 버튼 클릭 시 뒤로 가도록
+                                await props.props.history.push('/board')
                                 } } >등록</button>
-                            <button onClick={() => {props.changeBoard()}} >뒤로</button>
+                                {/* 뒤로 버큰 틀릭 시 뒤로 가도록 */}
+                            <button onClick={() => {props.props.history.push('/board')}} >뒤로</button>
                         </td>
                     </tr>
             </table>
