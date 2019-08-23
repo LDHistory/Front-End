@@ -234,34 +234,9 @@ export default function Main(props) {
             {/* main안 내용 Route 부분 추가 */}
         <main>
           <Switch>
-            <Route exact path='/about' component={About}></Route>
-            <Route exact path='/' component={About}></Route>
-            {/* <Route path={'/about' || '/'} component={About}/>
-            <Route
-              path='/board'
-              render={() => <Board list={props.state.arr} changeWrite={()=>{props.changeWrite()}} totalCount={props.state.totalCount}/>}
-            /> */}
-            {/* {(props.site === '' || props.site === 'about') ? <About /> : (props.site === 'board') 
+            <Route path='/about' component={About}></Route>
 
-                      ?
-                          <Board
-                          list={props.state.arr}
-                          changeWrite={() => {props.changeWrite()}}
-                          totalCount={props.state.totalCount}
-                          setCurrentPage={props.setCurrentPage}
-                          currentPage={props.state.currentPage}
-                          getBoardList={props.getBoardList}
-                          />
-                      :
-                          <BoardWrite
-                          handleSetBoardWriteData={props.handleSetBoardWriteData}
-                          changeBoard={() => {props.changeBoard()}}
-                          ondataSubmit={() =>{ props.ondataSubmit() }}
-                          />
-          } */}
-          </Switch>
-          <Switch>
-          <Route
+            <Route
               path='/board/write'
               render={() => 
                 <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData}
@@ -282,10 +257,11 @@ export default function Main(props) {
                   setCurrentPage={props.setCurrentPage}
                   getBoardList={props.getBoardList}
                 />
-              } />
+              }
+            />
+
+            <Route path='/' component={About}></Route>
           </Switch>
-
-
         </main>
       </Container>
       {/* Footer */}
