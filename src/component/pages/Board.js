@@ -2,7 +2,7 @@ import React from 'react';
 //import { Route, Link } from 'react-router-dom';
 //import { BoardWrite } from './boardPages';
 import { BoardItem } from './boardPages';
-import { Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import './table.css'
 import './button.css'
@@ -59,9 +59,6 @@ const Board = (props) => {
     if(endPage > totalPage) {
         endPage = totalPage;
     }
-
-
-
     
 
     const pageNumber = [];
@@ -69,43 +66,79 @@ const Board = (props) => {
         pageNumber.push(i);
     }
 
+    const arrTmp = [];
+
+    const first_prev = () => {
+        if(startPage > 1) {
+            arrTmp.push(
+                <button className="button2" key={'a'}>
+                    <Link
+                        to={`/board`}
+                        style={{ textDecoration: 'none' }}
+                        onClick={ async () => {
+                            await props.setCurrentPage(1);
+                            await props.getBoardList(currentPage);
+                        }}
+                    >
+                        처음
+                    </Link>
+                </button>
+            );
+        }
+    
+        if(currentPage > 1) {
+            arrTmp.push(
+                <button className="button2" key={'b'}>
+                    <Link
+                        to={`/board`}
+                        style={{ textDecoration: 'none' }}
+                        onClick={ async () => {
+                            await props.setCurrentPage(currentPage-1);
+                            await props.getBoardList(currentPage);
+                        }}
+                    >
+                        이전
+                    </Link>
+                </button>
+            );
+        }
+
+    }
+
+
     const pageNumberList = () => {
-        const arrTmp = [];
         for(let i=startPage; i<=endPage; i++) {
             if(i === currentPage) {
                 arrTmp.push(
                     <button className="button2" key={i}>
-                    <Link
-                        to={`/board`}
-                        style={{ textDecoration: 'none' }}
-                        key={i}
-                        onClick={ async () => {
-                            //자바스크립트는 함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
-                            //getBoardList()가 먼저 호출되어서 setCurrentPage의 setState가 뒤늦게 됨.. 그래서 두번클릭해야 나옴..
-                            await props.setCurrentPage(i);
-                            await props.getBoardList(currentPage);
-                        }}
-                    >
-                        <b> {i} </b>
-                    </Link>
+                        <Link
+                            to={`/board`}
+                            style={{ textDecoration: 'none' }}
+                            onClick={ async () => {
+                                //자바스크립트는 함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
+                                //getBoardList()가 먼저 호출되어서 setCurrentPage의 setState가 뒤늦게 됨.. 그래서 두번클릭해야 나옴..
+                                await props.setCurrentPage(i);
+                                await props.getBoardList(currentPage);
+                            }}
+                        >
+                            <b> {i} </b>
+                        </Link>
                     </button>
                 );
             }
             else {
                 arrTmp.push(
                     <button className="button2" key={i} >
-                    <Link
-                        // /${i}
-                        to={`/board`}
-                        style={{ textDecoration: 'none' }}
-                        key={i}
-                        onClick={ async () => {                            
-                            await props.setCurrentPage(i);
-                            await props.getBoardList(currentPage);
-                        }}
-                    >
-                         [{i}] 
-                    </Link>
+                        <Link
+                            to={`/board`}
+                            style={{ textDecoration: 'none' }}
+                            onClick={ async () => {
+                                await props.setCurrentPage(i);
+                                await props.getBoardList(currentPage);
+                            }}
+                        >
+                            {i} 
+                        </Link>
                     </button>
                 );
             }
@@ -114,6 +147,43 @@ const Board = (props) => {
     }
 
     
+
+
+    const next_end = () => {
+        if(currentPage < totalPage) {
+            arrTmp.push(
+                <button className="button2" key={'c'}>
+                    <Link
+                        to={`/board`}
+                        style={{ textDecoration: 'none' }}
+                        onClick={ async () => {
+                            await props.setCurrentPage(currentPage+1);
+                            await props.getBoardList(currentPage);
+                        }}
+                    >
+                        다음
+                    </Link>
+                </button>
+            );
+        }
+        if(endPage < totalPage) {
+            arrTmp.push(
+                <button className="button2" key={'d'}>
+                    <Link
+                        to={`/board`}
+                        style={{ textDecoration: 'none' }}
+                        onClick={ async () => {
+                            await props.setCurrentPage(totalPage);
+                            await props.getBoardList(currentPage);
+                        }}
+                    >
+                        끝
+                    </Link>
+                </button>
+            );
+        }
+    }
+
 
     
     const List = props.list.map((value, key) => 
@@ -139,10 +209,10 @@ const Board = (props) => {
             <table className="rwd-table" border="1">
                 <thead>
                     <tr>
-                        <th width="90">글 번호</th>
-                        <th width="340">제   목</th>
-                        <th width="130">이   름</th>
-                        <th width="190">작성 일자</th>
+                      <th width="80">글 번호</th>
+                      <th width="350">제   목</th>
+                      <th width="170">이   름</th>
+                      <th width="210">작성 일자</th>
                     </tr>
                 </thead>
                 
@@ -155,7 +225,12 @@ const Board = (props) => {
             <br />
 
             <center>
+                <Switch>
+                    <Route></Route>
+                </Switch>
+                {first_prev()}
                 {pageNumberList()}
+                {next_end()}
             </center>
         </div>
     );

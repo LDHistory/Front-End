@@ -9,6 +9,7 @@ const BoardWrite = (props) => {
             <h2>작성하거라</h2>
             {/* <form id="writeform"> */}
             <table cellPadding="5" cellSpacing="5" border="1" width="600">
+                <tbody>
                     <tr>
                         <td align="center">
                             <div>제  목</div>
@@ -57,6 +58,7 @@ const BoardWrite = (props) => {
                             <button onClick={() => {props.props.history.push('/board')}} >뒤로</button>
                         </td>
                     </tr>
+                </tbody>
             </table>
             {/* </form> */}
         </div>
