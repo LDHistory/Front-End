@@ -1,7 +1,4 @@
 import React from 'react';
-// 수정시작 ----------------------------------------------------------------------
-// .CSS 임포트
-// 태그에 css 적용
 import '../table.css'
 
 const BoardItem = ({no, title, name, date}) => {
@@ -14,5 +11,4 @@ const BoardItem = ({no, title, name, date}) => {
         </tr>
     );
 };
-// 수정끝 ----------------------------------------------------------------------
 export default BoardItem;
