@@ -172,7 +172,7 @@ export default function Main(props) {
   //    return null;
   //  }
   // }
-
+  
   return (
     <React.Fragment>
       <CssBaseline />
@@ -241,8 +241,12 @@ export default function Main(props) {
               render={() =>
                 <BoardUD
                   props={props}
+                  
                   writeud={props.writeud}
                   ondataUpdate={() => { props.ondataUpdate() }}
+
+                  handlePw={props.handlePw}
+                  onDeleteContent={props.onDeleteContent}
                 />
               }
             />

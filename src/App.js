@@ -56,6 +56,8 @@ class App extends Component {
     writeud : [
      
     ],
+
+    password:'',
       
     
   }
@@ -150,6 +152,40 @@ class App extends Component {
         });
         // console.log(this.state.arr);
       })
+  }
+
+  handlePw = (e) => {
+
+    console.log('pw', this.state.password);
+
+
+    this.setState({
+      ...this.state.write,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  onDeleteContent= () => {
+    console.log(this.state.password);
+
+    console.log('id',this.state.writeud[0].board_id);
+
+    alert('삭제 완료')
+    
+
+    axios.post('http://13.58.55.98:5000/request/setBoardDelete', {
+      board_id:this.state.writeud[0].board_id,
+      board_password:this.state.password
+    })
+      .then((res) => {
+        
+        this.setState({
+          ...this.state,
+          arr: res.data,
+        });
+        // console.log(this.state.arr);
+      })
+    
   }
 
   handleSetCurrentPage = (num) => {
@@ -351,6 +387,9 @@ class App extends Component {
                 getBoardList={this.handleGetBoardList}
                 changeNumber={this.changeNumber}
                 ondataUpdate={this.ondataUpdate}
+
+                handlePw={this.handlePw}
+                onDeleteContent={this.onDeleteContent}
               />
             }
           />

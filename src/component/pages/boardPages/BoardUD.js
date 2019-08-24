@@ -1,13 +1,14 @@
 import React from 'react';
 
-const BoardUD = (props) => {
-    // console.log('BoardUD');
+const BoardUD = (props, state) => {
+    console.log('st',props.props.state);
+    
 
     let arr = [];
 
     let test = () => {
         arr = props.writeud[0];
-        // console.log(arr);
+        console.log('arr', arr);
         for (let key in arr) {
             // console.log(arr[key])
             return (
@@ -33,7 +34,7 @@ const BoardUD = (props) => {
                             <div>비밀번호</div>
                         </td>
                         <td>
-                            <input name="password" type="password" maxLength="4" size="10"  value={arr["board_password"]}  readOnly/>
+                            <input name="password" type="password" maxLength="4" size="10" onChange={ props.handlePw } /*value={arr["board_password"]}  readOnly*//>
                         </td>
                     </tr>
                     <tr>
@@ -56,10 +57,16 @@ const BoardUD = (props) => {
                                 } } >등록</button> */}
                             {/* 뒤로 버큰 틀릭 시 뒤로 가도록 */}
                             <button onClick={() => { 
-                                
                                 props.ondataUpdate() 
+
                                 }}>수정</button>
-                            <button>삭제</button>
+                            <button onClick ={()=>{
+                                (props.props.state.password === props.writeud[0].board_password) ? 
+                                props.onDeleteContent()
+                                 : alert('다시 입력 하거라!')
+                                
+                                
+                            }}>삭제</button>
                             <button onClick={() => { props.props.history.push(`/board/${props.props.state.currentPage}`) }} >뒤로</button>
                         </td>
                     </tr>
