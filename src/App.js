@@ -13,7 +13,6 @@ class App extends Component {
   }
 
   state = {
-    site: '',
 
     number:'',
 
@@ -150,85 +149,12 @@ class App extends Component {
           ...this.state,
           arr: response.data,
         });
-        // console.log(this.state.arr);
-      })
-  }
-
-  handlePw = (e) => {
-
-    console.log('pw', this.state.password);
-
-
-    this.setState({
-      ...this.state.write,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  onDeleteContent= () => {
-    console.log(this.state.password);
-
-    console.log('id',this.state.writeud[0].board_id);
-
-    alert('삭제 완료')
-    
-
-    axios.post('http://13.58.55.98:5000/request/setBoardDelete', {
-      board_id:this.state.writeud[0].board_id,
-      board_password:this.state.password
-    })
-      .then((res) => {
-        
-        this.setState({
-          ...this.state,
-          arr: res.data,
-        });
-        // console.log(this.state.arr);
-      })
-    
-  }
-
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
       currentPage: num,
     })
-    // console.log(this.state.currentPage);
-  }
-
-  //Start state의 site 값 변경 메소드들-----------------------
-  //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
-  changeAbout = () => {
-    this.setState({
-      site: 'about',
-    })
-  }
-
-  //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
-  // this.handleGetBoard(); 여기로 이동시킴,
-  // board로 이동할 때 마다 db데이터 값을 가져오기 위함
-  changeBoard = () => {
-    this.setState({
-      site: 'board',
-    })
-  }
-
-  // Borad 페이지에서 글쓰기 페이지를 정하기 위해 site 상태값을 조정
-  changeWrite = () => {
-    this.setState({
-      site: 'boardwrite',
-    })
-  }
-
-  // changeWrite = () => {
-  //   this.setState({
-  //     site: 'boardwrite',
-  //   })
-  // }
-  //End state의 site 값 변경 메소드들-----------------------
-
-
-
+    
   // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
   ondataSubmit = () => {
     // console.log(this.state.write.title);
@@ -248,7 +174,7 @@ class App extends Component {
       date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
       title: this.state.write.title,
     })
-      .then(async (res) => {    /* site change 부분 제거 */
+      .then(async (res) => {
         console.log(res);
         if (res.data) {
           alert('글 등록 완료')
@@ -296,11 +222,7 @@ class App extends Component {
   //////////////////////////////////////////////////////
 
 
-
-  //--------------------------------------------
-  //페이징 처리 로직
-  //총 게시글의 개수를 가져와서
-  //한 페이지에 출력될 게시물 수(10, countList)로 나눈 값을 반환한다.
+  //총 게시글의 개수를 가져옴
   handleTotalPage = () => {
     axios.get('http://13.58.55.98:5000/request/getBoardCount')
       .then((response) => {
@@ -309,16 +231,6 @@ class App extends Component {
           totalCount: response.data,
         })
       })
-  }
-  //--------------------------------------------
-
-
-  // this.handleGetBoard(); 를 changeBoard 안으로 이동
-  componentDidMount() {
-    //각각 setState가 실행되므로 2번 렌더링 되고 있다.
-    //이것을 예방할 방법이 필요할 듯..?
-    // this.handleGetBoardList();
-    // this.handleTotalPage();
   }
 
   changeNumber = (number) => {
@@ -380,8 +292,6 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
-                // site={this.state.site}
-                writeud={this.state.writeud}
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
                 getBoardList={this.handleGetBoardList}
