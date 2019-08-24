@@ -8,11 +8,8 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { Route, Switch } from 'react-router-dom';
 import { About, Board } from './index';
-// 수정시작 ----------------------------------------------------------------------
-// BoardWrite 컴포넌트 사용을 위해 import
-import { BoardWrite } from './boardPages';
-// 수정끝 ----------------------------------------------------------------------
-//import { Route } from 'react-router-dom';
+
+import { BoardWrite, BoardUD } from './boardPages';
 
 function Copyright() {
   return (
@@ -189,9 +186,6 @@ export default function Main(props) {
             align="left"
             noWrap
             className={classes.toolbarTitle}
-          /* onClick={() => { 버튼아니라서 onClick이 안됨
-            props.history.replace('/');
-          }} */
           >
             Bit Team 3
           </Typography>
@@ -207,7 +201,6 @@ export default function Main(props) {
             noWrap
             variant="body2"
             onClick={() => {
-              props.changeAbout();
               props.history.push('/about');
             }}
             className={classes.toolbarLink}
@@ -219,7 +212,6 @@ export default function Main(props) {
             noWrap
             variant="body2"
             onClick={() => {
-              props.changeBoard();
               props.history.push('/board');
             }}
 
@@ -231,70 +223,58 @@ export default function Main(props) {
           {/* {setBoard()} 로그인 안하면 board 안보이게..적용 시 위에 <Link>board</Link> 지우기*/}
         </Toolbar>
 
-            {/* main안 내용 Route 부분 추가 */}
+
         <main>
           <Switch>
-            <Route exact path='/about' component={About}></Route>
-            <Route exact path='/' component={About}></Route>
-            {/* <Route path={'/about' || '/'} component={About}/>
+            <Route path='/about' component={About}></Route>
             <Route
-              path='/board'
-              render={() => <Board list={props.state.arr} changeWrite={()=>{props.changeWrite()}} totalCount={props.state.totalCount}/>}
-            /> */}
-            {/* {(props.site === '' || props.site === 'about') ? <About /> : (props.site === 'board') 
-
-                      ?
-                          <Board
-                          list={props.state.arr}
-                          changeWrite={() => {props.changeWrite()}}
-                          totalCount={props.state.totalCount}
-                          setCurrentPage={props.setCurrentPage}
-                          currentPage={props.state.currentPage}
-                          getBoardList={props.getBoardList}
-                          />
-                      :
-                          <BoardWrite
-                          handleSetBoardWriteData={props.handleSetBoardWriteData}
-                          changeBoard={() => {props.changeBoard()}}
-                          ondataSubmit={() =>{ props.ondataSubmit() }}
-                          />
-          } */}
-          </Switch>
-          <Switch>
-          <Route
               path='/board/write'
-              render={() => 
+              render={() =>
                 <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData}
-                  changeBoard={() => { props.changeBoard() }}
-                  ondataSubmit={() => { props.ondataSubmit() }}
+                  ondataSubmit={props.ondataSubmit}
                   props={props} />
               }
             />
             <Route
-              path='/board'
+              path={`/board/${props.state.currentPage}/:num`}
+              // exact path='/board/page/:number'
               render={() =>
+                <BoardUD
+                  props={props}
+                  writeud={props.writeud}
+                  ondataUpdate={() => { props.ondataUpdate() }}
+                />
+              }
+            />
+            <Route
+              path={`/board/:currentPage?`}
+              render={(test) =>
                 <Board
+                  {...test}
                   props={props}
                   list={props.state.arr}
-                  changeWrite={() => { props.changeWrite() }}
                   totalCount={props.state.totalCount}
                   currentPage={props.state.currentPage}
                   setCurrentPage={props.setCurrentPage}
                   getBoardList={props.getBoardList}
-                />
-              } />
-          </Switch>
 
+                  changeNumber={props.changeNumber}
+                />
+              }
+            />
+
+            <Route path='/' component={About}></Route>
+          </Switch>
 
         </main>
       </Container>
-      {/* Footer */}
+
       {<footer className={classes.footer}>
         <Container maxWidth="lg">
           <Copyright />
         </Container>
       </footer>}
-      {/* End footer */}
+
     </React.Fragment>
   );
 }

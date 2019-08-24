@@ -7,7 +7,6 @@ const BoardWrite = (props) => {
         <div align="center">
             <br />
             <h2>작성하거라</h2>
-            {/* <form id="writeform"> */}
             <table cellPadding="5" cellSpacing="5" border="1" width="600">
                 <tbody>
                     <tr>
