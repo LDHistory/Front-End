@@ -14,7 +14,8 @@
 }
 .button2
 {
-  background-color: #008CBA; /* Blue */
+  /* Blue */
+  /* background-color: #008CBA;  */
   /* background: rgb(108, 151, 197); */
   background: greenyellow;
   border: none;

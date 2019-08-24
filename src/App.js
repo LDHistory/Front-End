@@ -14,6 +14,10 @@ class App extends Component {
 
   state = {
 
+    number:'',
+
+    keyud:'',
+
     signin: {
       email: '',
       pw: '',
@@ -47,6 +51,14 @@ class App extends Component {
 
     //현재 페이지를 반환하는 변수
     currentPage: 1,
+
+    writeud : [
+     
+    ],
+
+    password:'',
+      
+    
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -137,26 +149,21 @@ class App extends Component {
           ...this.state,
           arr: response.data,
         });
-      })
-  }
-
-  //현재 페이지를 setState하는 메소드, 숫자 버튼 클릭시 해당 숫자를 인자값으로 가져옴
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
       currentPage: num,
     })
-  }
-
+    
   // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
   ondataSubmit = () => {
-    console.log(this.state.write.title);
-    console.log(this.state.write.name);
-    console.log(this.state.write.password);
-    console.log(this.state.write.content);
+    // console.log(this.state.write.title);
+    // console.log(this.state.write.name);
+    // console.log(this.state.write.password);
+    // console.log(this.state.write.content);
     console.log(new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()))
 
-    console.log(this.state.write);
+    // console.log(this.state.write);
 
 
     axios.post('http://13.58.55.98:5000/request/setBoard', {
@@ -198,6 +205,22 @@ class App extends Component {
 
   }
 
+  //////////////////////////////////////////////////////
+  ondataUpdate = () => {
+    console.log(this.state.writeud[0]);
+    
+    console.log(this.state.writeud[0].board_contents);
+    console.log(this.state.writeud[0].board_date);
+    console.log(this.state.writeud[0].board_id);
+    console.log(this.state.writeud[0].board_name);
+    console.log(this.state.writeud[0].board_password);
+    console.log(this.state.writeud[0].board_title);
+    console.log(this.state.writeud[0].board_user);
+
+    
+  }
+  //////////////////////////////////////////////////////
+
 
   //총 게시글의 개수를 가져옴
   handleTotalPage = () => {
@@ -210,9 +233,38 @@ class App extends Component {
       })
   }
 
+  changeNumber = (number) => {
+    // this.setState({
+    //   ...this.state,
+    //   number: number,
+    // })
+    // console.log('number', this.state.number);
+    // console.log('arr', this.state.arr);
+    for (let i = 0; i < 10; i++) {
+      if (this.state.arr[i].rownum === number) {
+        // console.log('출력', this.state.arr[i]);
+
+        axios.get('http://13.58.55.98:5000/request/getBoardContents', {
+          params: {
+            board_id : this.state.arr[i].board_id
+          }
+        })
+          .then((res) => {
+            // console.log('res',res);
+            
+            this.setState({
+              ...this.state,
+              writeud: res.data,
+            })
+          })
+        // console.log('writeud', this.state.writeud);
+      }
+    }
+  }
+
 
   render() {
-
+    
     return (
       <div>
         <Switch>
@@ -243,6 +295,11 @@ class App extends Component {
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
                 getBoardList={this.handleGetBoardList}
+                changeNumber={this.changeNumber}
+                ondataUpdate={this.ondataUpdate}
+
+                handlePw={this.handlePw}
+                onDeleteContent={this.onDeleteContent}
               />
             }
           />

@@ -9,8 +9,6 @@ import Container from '@material-ui/core/Container';
 import { Route, Switch } from 'react-router-dom';
 import { About, Board } from './index';
 
-import { BoardWrite } from './boardPages';
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -172,7 +170,7 @@ export default function Main(props) {
   //    return null;
   //  }
   // }
-
+  
   return (
     <React.Fragment>
       <CssBaseline />
@@ -225,14 +223,12 @@ export default function Main(props) {
 
 
         <main>
-
           <Switch>
             <Route path='/about' component={About}></Route>
             <Route
               path='/board/write'
-              render={() => 
+              render={() =>
                 <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData}
-                  ondataSubmit={ props.ondataSubmit }
                   props={props} />
               }
             />
@@ -247,6 +243,8 @@ export default function Main(props) {
                   currentPage={props.state.currentPage}
                   setCurrentPage={props.setCurrentPage}
                   getBoardList={props.getBoardList}
+
+                  changeNumber={props.changeNumber}
                 />
               }
             />
@@ -262,7 +260,6 @@ export default function Main(props) {
           <Copyright />
         </Container>
       </footer>}
-      
     </React.Fragment>
   );
 }

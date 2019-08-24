@@ -75,7 +75,6 @@ const Board = (props) => {
                 <button className="button2" key={'a'}>
                     <Link
                         to={`/board/1`}
-                        style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(1);
                             await props.getBoardList(currentPage);
@@ -92,7 +91,6 @@ const Board = (props) => {
                 <button className="button2" key={'b'}>
                     <Link
                         to={`/board/${currentPage-1}`}
-                        style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(currentPage-1);
                             await props.getBoardList(currentPage);
@@ -114,7 +112,6 @@ const Board = (props) => {
                     <button className="button2" key={i}>
                         <Link
                             to={`/board/${i}`}
-                            style={{ textDecoration: 'none' }}
                             onClick={ async () => {
                                 //함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
                                 //getBoardList()가 먼저 호출되어서 setCurrentPage의 setState가 뒤늦게 됨.. 그래서 두번클릭해야 나옴..
@@ -132,7 +129,6 @@ const Board = (props) => {
                     <button className="button2" key={i} >
                         <Link
                             to={`/board/${i}`}
-                            style={{ textDecoration: 'none' }}
                             onClick={ async () => {
                                 await props.setCurrentPage(i);
                                 await props.getBoardList(currentPage);
@@ -156,7 +152,6 @@ const Board = (props) => {
                 <button className="button2" key={'c'}>
                     <Link
                         to={`/board/${currentPage+1}`}
-                        style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(currentPage+1);
                             await props.getBoardList(currentPage);
@@ -172,7 +167,6 @@ const Board = (props) => {
                 <button className="button2" key={'d'}>
                     <Link
                         to={`/board/${totalPage}`}
-                        style={{ textDecoration: 'none' }}
                         onClick={ async () => {
                             await props.setCurrentPage(totalPage);
                             await props.getBoardList(currentPage);
@@ -196,6 +190,9 @@ const Board = (props) => {
                 name={value.board_name}
                 date={value.board_date}
                 key={key}
+
+                props={props}
+                changeNumber={props.changeNumber}
             />
         )
     });
