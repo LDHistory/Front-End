@@ -180,7 +180,6 @@ const Board = (props) => {
     }
 
 
-    
     const List = props.list.map((value, key) => 
     {
         return (

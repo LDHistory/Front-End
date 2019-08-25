@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { Route, Switch } from 'react-router-dom';
 import { About, Board } from './index';
+import { BoardWrite, BoardUD } from './boardPages';
 
 function Copyright() {
   return (
@@ -229,7 +230,20 @@ export default function Main(props) {
               path='/board/write'
               render={() =>
                 <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData}
-                  props={props} />
+                ondataSubmit={props.ondataSubmit}  
+                props={props} />
+              }
+            />
+            <Route
+              path={`/board/${props.state.currentPage}/:num`}
+              render={() =>
+                <BoardUD
+                  props={props}
+                  writeud={props.writeud}
+                  ondataUpdate={() => { props.ondataUpdate() }}
+                  handlePw={props.handlePw}
+                  onDeleteContent={props.onDeleteContent}
+                />
               }
             />
             <Route
