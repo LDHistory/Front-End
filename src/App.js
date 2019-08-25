@@ -14,9 +14,9 @@ class App extends Component {
 
   state = {
 
-    number:'',
+    number: '',
 
-    keyud:'',
+    keyud: '',
 
     signin: {
       email: '',
@@ -52,13 +52,11 @@ class App extends Component {
     //현재 페이지를 반환하는 변수
     currentPage: 1,
 
-    writeud : [
-     
+    writeud: [
+
     ],
 
-    password:'',
-      
-    
+    password: '',
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -109,7 +107,6 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
-    console.log(this.state.signup);
   }
 
 
@@ -122,7 +119,6 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
-    console.log(this.state.write);
   }
 
 
@@ -149,22 +145,43 @@ class App extends Component {
           ...this.state,
           arr: response.data,
         });
+        console.log(this.state.arr);
+      })
+  }
+
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
       currentPage: num,
     })
-    
+  }
+
+  handlePw = (e) => {
+    this.setState({
+      ...this.state.write,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  onDeleteContent = () => {
+    alert('삭제 완료')
+
+    return new Promise((resolve, reject) => {
+      axios.post('http://13.58.55.98:5000/request/setBoardDelete', {
+      board_id: this.state.writeud[0].board_id,
+      board_password: this.state.password
+    }).then(async (res) => {
+        await this.handleGetBoardList();
+        await this.handleTotalPage();
+        await resolve();
+      })
+    })
+  }
+
+
   // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
   ondataSubmit = () => {
-    // console.log(this.state.write.title);
-    // console.log(this.state.write.name);
-    // console.log(this.state.write.password);
-    // console.log(this.state.write.content);
     console.log(new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()))
-
-    // console.log(this.state.write);
-
 
     axios.post('http://13.58.55.98:5000/request/setBoard', {
       name: this.state.write.name,
@@ -175,7 +192,6 @@ class App extends Component {
       title: this.state.write.title,
     })
       .then(async (res) => {
-        console.log(res);
         if (res.data) {
           alert('글 등록 완료')
           await this.handleGetBoardList();
@@ -186,7 +202,6 @@ class App extends Component {
         }
       })
       .catch((res) => {
-        console.log(res.data);
         console.log('전송실패');
         alert('글 등록 실패 이유는 아몰랑!')
       })
@@ -208,7 +223,7 @@ class App extends Component {
   //////////////////////////////////////////////////////
   ondataUpdate = () => {
     console.log(this.state.writeud[0]);
-    
+
     console.log(this.state.writeud[0].board_contents);
     console.log(this.state.writeud[0].board_date);
     console.log(this.state.writeud[0].board_id);
@@ -217,7 +232,7 @@ class App extends Component {
     console.log(this.state.writeud[0].board_title);
     console.log(this.state.writeud[0].board_user);
 
-    
+
   }
   //////////////////////////////////////////////////////
 
@@ -246,12 +261,12 @@ class App extends Component {
 
         axios.get('http://13.58.55.98:5000/request/getBoardContents', {
           params: {
-            board_id : this.state.arr[i].board_id
+            board_id: this.state.arr[i].board_id
           }
         })
           .then((res) => {
             // console.log('res',res);
-            
+
             this.setState({
               ...this.state,
               writeud: res.data,
@@ -264,7 +279,6 @@ class App extends Component {
 
 
   render() {
-    
     return (
       <div>
         <Switch>
@@ -292,6 +306,7 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
+                writeud={this.state.writeud}
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
                 getBoardList={this.handleGetBoardList}
