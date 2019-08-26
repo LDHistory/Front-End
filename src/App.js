@@ -372,6 +372,7 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
+                writeud={this.state.writeud}
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
                 getBoardList={this.handleGetBoardList}

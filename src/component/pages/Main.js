@@ -247,9 +247,6 @@ export default function Main(props) {
                 />
               }
             />
-            <Route
-                  props={props} />
-              }
             />
             <Route
               path={`/board/:currentPage?`}
