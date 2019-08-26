@@ -13,11 +13,10 @@ class App extends Component {
   }
 
   state = {
-    site: '',
 
-    number:'',
+    number: '',
 
-    keyud:'',
+    keyud: '',
 
     signin: {
       email: '',
@@ -53,13 +52,11 @@ class App extends Component {
     //현재 페이지를 반환하는 변수
     currentPage: 1,
 
-    writeud : [
-     
+    writeud: [
+
     ],
 
-    password:'',
-      
-    
+    // password: '',
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -110,7 +107,6 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
-    console.log(this.state.signup);
   }
 
 
@@ -123,8 +119,9 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
-    console.log(this.state.write);
   }
+
+  
 
 
   //회원 가입 버튼을 눌렀을 때 express서버로 data를 전송하는 메서드
@@ -150,42 +147,8 @@ class App extends Component {
           ...this.state,
           arr: response.data,
         });
-        // console.log(this.state.arr);
+        console.log(this.state.arr);
       })
-  }
-
-  handlePw = (e) => {
-
-    console.log('pw', this.state.password);
-
-
-    this.setState({
-      ...this.state.write,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  onDeleteContent= () => {
-    console.log(this.state.password);
-
-    console.log('id',this.state.writeud[0].board_id);
-
-    alert('삭제 완료')
-    
-
-    axios.post('http://13.58.55.98:5000/request/setBoardDelete', {
-      board_id:this.state.writeud[0].board_id,
-      board_password:this.state.password
-    })
-      .then((res) => {
-        
-        this.setState({
-          ...this.state,
-          arr: res.data,
-        });
-        // console.log(this.state.arr);
-      })
-    
   }
 
   handleSetCurrentPage = (num) => {
@@ -193,52 +156,37 @@ class App extends Component {
       ...this.state,
       currentPage: num,
     })
-    // console.log(this.state.currentPage);
   }
 
-  //Start state의 site 값 변경 메소드들-----------------------
-  //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
-  changeAbout = () => {
+  handlePw = (e) => {
     this.setState({
-      site: 'about',
+      ...this.state.write,
+      [e.target.name]: e.target.value,
+    })
+    // console.log(this.state.write);
+    
+  }
+
+  onDeleteContent = () => {
+    alert('삭제 완료')
+
+    return new Promise((resolve, reject) => {
+      axios.post('http://13.58.55.98:5000/request/setBoardDelete', {
+      board_id: this.state.writeud[0].board_id,
+      board_password: this.state.password
+    }).then(async (res) => {
+      
+        await this.handleGetBoardList();
+        await this.handleTotalPage();
+        await resolve();
+      })
     })
   }
-
-  //Main 페이지에 띄울 sub 페이지를 정하기 위해 site 상태값을 조정
-  // this.handleGetBoard(); 여기로 이동시킴,
-  // board로 이동할 때 마다 db데이터 값을 가져오기 위함
-  changeBoard = () => {
-    this.setState({
-      site: 'board',
-    })
-  }
-
-  // Borad 페이지에서 글쓰기 페이지를 정하기 위해 site 상태값을 조정
-  changeWrite = () => {
-    this.setState({
-      site: 'boardwrite',
-    })
-  }
-
-  // changeWrite = () => {
-  //   this.setState({
-  //     site: 'boardwrite',
-  //   })
-  // }
-  //End state의 site 값 변경 메소드들-----------------------
-
 
 
   // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
   ondataSubmit = () => {
-    // console.log(this.state.write.title);
-    // console.log(this.state.write.name);
-    // console.log(this.state.write.password);
-    // console.log(this.state.write.content);
     console.log(new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()))
-
-    // console.log(this.state.write);
-
 
     axios.post('http://13.58.55.98:5000/request/setBoard', {
       name: this.state.write.name,
@@ -248,8 +196,7 @@ class App extends Component {
       date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
       title: this.state.write.title,
     })
-      .then(async (res) => {    /* site change 부분 제거 */
-        console.log(res);
+      .then(async (res) => {
         if (res.data) {
           alert('글 등록 완료')
           await this.handleGetBoardList();
@@ -260,7 +207,6 @@ class App extends Component {
         }
       })
       .catch((res) => {
-        console.log(res.data);
         console.log('전송실패');
         alert('글 등록 실패 이유는 아몰랑!')
       })
@@ -280,27 +226,83 @@ class App extends Component {
   }
 
   //////////////////////////////////////////////////////
+  // 수정한 데이터 db로 전송
   ondataUpdate = () => {
+    alert('수정 완료')
+
     console.log(this.state.writeud[0]);
     
-    console.log(this.state.writeud[0].board_contents);
-    console.log(this.state.writeud[0].board_date);
-    console.log(this.state.writeud[0].board_id);
-    console.log(this.state.writeud[0].board_name);
-    console.log(this.state.writeud[0].board_password);
-    console.log(this.state.writeud[0].board_title);
-    console.log(this.state.writeud[0].board_user);
 
+    return new Promise((resolve, reject) => {
+      axios.post('http://13.58.55.98:5000/request/getBoardModify', {
+      board_id: this.state.writeud[0].board_id,
+      board_password: this.state.writeud[0].board_password,
+      name: this.state.writeud[0].board_name,
+      user: "edh8266",
+      contents: this.state.writeud[0].board_contents,
+      date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
+      title: this.state.writeud[0].board_title,    
+    }).then(async (res) => {
+      console.log('res',res);
+        await this.handleGetBoardList();
+        await this.handleTotalPage();
+        await resolve();
+      })
+    })
+  }
+
+  // ondataUpdatess = () => {
+
+  //   console.log(this.state.writeud[0]);
+  //   console.log('pa',this.state.password);
+  //   console.log('paw',this.state.writeud[0].board_password);
+    
+
+  //   axios.post('http://13.58.55.98:5000/request/getBoardModify', {
+  //     board_id: this.state.writeud[0].board_id,
+  //     board_password: this.state.writeud[0].board_password,
+  //     name: this.state.writeud[0].board_name,
+  //     user: this.state.signin.email,
+  //     contents: this.state.writeud[0].board_contents,
+  //     date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
+  //     title: this.state.writeud[0].board_title,    
+  //   }).then(async (res) => {
+  //     await this.handleGetBoardList();
+  //     await this.handleTotalPage();
+  //   })
+
+
+  //   // console.log(this.state.writeud[0]);
+
+  //   // console.log(this.state.writeud[0].board_contents);
+  //   // console.log(this.state.writeud[0].board_date);
+  //   // console.log(this.state.writeud[0].board_id);
+  //   // console.log(this.state.writeud[0].board_name);
+  //   // console.log(this.state.writeud[0].board_password);
+  //   // console.log(this.state.writeud[0].board_title);
+  //   // console.log(this.state.writeud[0].board_user);
+
+
+  // }
+
+  ////////////////////////////////
+  // 수정 handle
+  handleupdateData = (e) => {
+    this.setState({
+      ...this.state,
+      writeud: [{
+        ...this.state.writeud[0],
+        [e.target.name]: e.target.value,
+      }]
+    })
+    // console.log(this.state.writeud);
     
   }
+  ////////////////////////////////
   //////////////////////////////////////////////////////
 
 
-
-  //--------------------------------------------
-  //페이징 처리 로직
-  //총 게시글의 개수를 가져와서
-  //한 페이지에 출력될 게시물 수(10, countList)로 나눈 값을 반환한다.
+  //총 게시글의 개수를 가져옴
   handleTotalPage = () => {
     axios.get('http://13.58.55.98:5000/request/getBoardCount')
       .then((response) => {
@@ -309,16 +311,6 @@ class App extends Component {
           totalCount: response.data,
         })
       })
-  }
-  //--------------------------------------------
-
-
-  // this.handleGetBoard(); 를 changeBoard 안으로 이동
-  componentDidMount() {
-    //각각 setState가 실행되므로 2번 렌더링 되고 있다.
-    //이것을 예방할 방법이 필요할 듯..?
-    // this.handleGetBoardList();
-    // this.handleTotalPage();
   }
 
   changeNumber = (number) => {
@@ -334,25 +326,25 @@ class App extends Component {
 
         axios.get('http://13.58.55.98:5000/request/getBoardContents', {
           params: {
-            board_id : this.state.arr[i].board_id
+            board_id: this.state.arr[i].board_id
           }
         })
           .then((res) => {
             // console.log('res',res);
-            
+
             this.setState({
               ...this.state,
               writeud: res.data,
             })
           })
-        // console.log('writeud', this.state.writeud);
+        //  console.log('writeud', this.state.writeud);
       }
     }
+    console.log('writeud', this.state.writeud);
   }
 
 
   render() {
-    
     return (
       <div>
         <Switch>
@@ -380,7 +372,6 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
-                // site={this.state.site}
                 writeud={this.state.writeud}
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
@@ -390,6 +381,8 @@ class App extends Component {
 
                 handlePw={this.handlePw}
                 onDeleteContent={this.onDeleteContent}
+
+                handleupdateData={this.handleupdateData}
               />
             }
           />

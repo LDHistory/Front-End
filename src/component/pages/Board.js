@@ -75,7 +75,7 @@ const Board = (props) => {
                 <button className="button2" key={'a'}>
                     <Link
                         to={`/board/1`}
-                        style={{ textDecoration: 'none', fontSize:13 }}
+                        style={{ textDecoration: 'none', color: "black", fontSize:13 }}
                         onClick={ async () => {
                             await props.setCurrentPage(1);
                             await props.getBoardList(currentPage);
@@ -186,7 +186,6 @@ const Board = (props) => {
     }
 
 
-    
     const List = props.list.map((value, key) => 
     {
         return (
@@ -203,7 +202,6 @@ const Board = (props) => {
         )
     });
 
-    // console.log('bo');
     
     return (
         <div align="center">

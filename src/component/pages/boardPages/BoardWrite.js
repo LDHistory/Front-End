@@ -1,7 +1,6 @@
 import React from 'react';
 
 const BoardWrite = (props) => {
-    console.log(props);
     
     return (
         <div align="center">
