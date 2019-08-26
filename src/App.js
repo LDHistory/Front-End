@@ -151,6 +151,7 @@ class App extends Component {
       })
   }
 
+
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
@@ -182,7 +183,6 @@ class App extends Component {
       })
     })
   }
-
 
   // 글쓰기 페이지에서 버튼 클릭시 DB에 데이터 전송
   ondataSubmit = () => {
@@ -372,7 +372,6 @@ class App extends Component {
 
                 handleLogout={this.handleLogout}
 
-                writeud={this.state.writeud}
                 state={this.state}
                 setCurrentPage={this.handleSetCurrentPage}
                 getBoardList={this.handleGetBoardList}

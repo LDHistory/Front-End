@@ -114,7 +114,7 @@ const Board = (props) => {
                     <button className="button2" key={i}>
                         <Link
                             to={`/board/${i}`}
-                            style={{ textDecoration: 'none', color: "black" }}
+                            style={{ textDecoration: 'none', color: "black"}}
                             onClick={ async () => {
                                 //함수가 비동기로 실행되므로... 동기로 바꿔줘야함.
                                 //getBoardList()가 먼저 호출되어서 setCurrentPage의 setState가 뒤늦게 됨.. 그래서 두번클릭해야 나옴..
