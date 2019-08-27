@@ -240,6 +240,18 @@ export default function Main(props) {
                 <BoardUD
                   props={props}
                   writeud={props.writeud}
+                  ondataUpdate={() => { props.ondataUpdate() }}
+                  handlePw={props.handlePw}
+                  onDeleteContent={props.onDeleteContent}
+                />
+              }
+            />
+            <Route
+              path={`/board/${props.state.currentPage}/:num`}
+              render={() =>
+                <BoardUD
+                  props={props}
+                  writeud={props.writeud}
                   ondataUpdate={props.ondataUpdate}
                   handlePw={props.handlePw}
                   onDeleteContent={props.onDeleteContent}

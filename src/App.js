@@ -55,8 +55,6 @@ class App extends Component {
     writeud: [
 
     ],
-
-    // password: '',
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -150,8 +148,7 @@ class App extends Component {
         console.log(this.state.arr);
       })
   }
-
-
+  
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
@@ -164,8 +161,6 @@ class App extends Component {
       ...this.state.write,
       [e.target.name]: e.target.value,
     })
-    // console.log(this.state.write);
-    
   }
 
   onDeleteContent = () => {
@@ -176,7 +171,6 @@ class App extends Component {
       board_id: this.state.writeud[0].board_id,
       board_password: this.state.password
     }).then(async (res) => {
-      
         await this.handleGetBoardList();
         await this.handleTotalPage();
         await resolve();
@@ -232,7 +226,6 @@ class App extends Component {
 
     console.log(this.state.writeud[0]);
     
-
     return new Promise((resolve, reject) => {
       axios.post('http://13.58.55.98:5000/request/getBoardModify', {
       board_id: this.state.writeud[0].board_id,
@@ -250,42 +243,7 @@ class App extends Component {
       })
     })
   }
-
-  // ondataUpdatess = () => {
-
-  //   console.log(this.state.writeud[0]);
-  //   console.log('pa',this.state.password);
-  //   console.log('paw',this.state.writeud[0].board_password);
-    
-
-  //   axios.post('http://13.58.55.98:5000/request/getBoardModify', {
-  //     board_id: this.state.writeud[0].board_id,
-  //     board_password: this.state.writeud[0].board_password,
-  //     name: this.state.writeud[0].board_name,
-  //     user: this.state.signin.email,
-  //     contents: this.state.writeud[0].board_contents,
-  //     date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
-  //     title: this.state.writeud[0].board_title,    
-  //   }).then(async (res) => {
-  //     await this.handleGetBoardList();
-  //     await this.handleTotalPage();
-  //   })
-
-
-  //   // console.log(this.state.writeud[0]);
-
-  //   // console.log(this.state.writeud[0].board_contents);
-  //   // console.log(this.state.writeud[0].board_date);
-  //   // console.log(this.state.writeud[0].board_id);
-  //   // console.log(this.state.writeud[0].board_name);
-  //   // console.log(this.state.writeud[0].board_password);
-  //   // console.log(this.state.writeud[0].board_title);
-  //   // console.log(this.state.writeud[0].board_user);
-
-
-  // }
-
-  ////////////////////////////////
+  
   // 수정 handle
   handleupdateData = (e) => {
     this.setState({
@@ -295,11 +253,7 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }]
     })
-    // console.log(this.state.writeud);
-    
   }
-  ////////////////////////////////
-  //////////////////////////////////////////////////////
 
 
   //총 게시글의 개수를 가져옴
@@ -314,12 +268,6 @@ class App extends Component {
   }
 
   changeNumber = (number) => {
-    // this.setState({
-    //   ...this.state,
-    //   number: number,
-    // })
-    // console.log('number', this.state.number);
-    // console.log('arr', this.state.arr);
     for (let i = 0; i < 10; i++) {
       if (this.state.arr[i].rownum === number) {
         // console.log('출력', this.state.arr[i]);
@@ -330,14 +278,11 @@ class App extends Component {
           }
         })
           .then((res) => {
-            // console.log('res',res);
-
             this.setState({
               ...this.state,
               writeud: res.data,
             })
           })
-        //  console.log('writeud', this.state.writeud);
       }
     }
     console.log('writeud', this.state.writeud);
