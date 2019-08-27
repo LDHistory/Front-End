@@ -233,6 +233,7 @@ export default function Main(props) {
                 />
               }
             />
+            
             <Route
               path={`/board/${props.state.currentPage}/:num`}
               render={() =>
@@ -246,7 +247,7 @@ export default function Main(props) {
                 />
               }
             />
-            />
+
             <Route
               path={`/board/:currentPage?`}
               render={(test) =>
