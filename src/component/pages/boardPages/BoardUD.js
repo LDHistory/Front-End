@@ -16,7 +16,7 @@ const BoardUD = (props, state) => {
                             <div>제  목</div>
                         </td>
                         <td>
-                            <input id="title" name="title" maxLength="30" size="50" value={arr["board_title"]} readOnly />
+                            <input id="board_title" name="board_title" maxLength="30" size="50" value={props.writeud[0].board_title} onChange={props.handleupdateData} />
                         </td>
                     </tr>
                     <tr>
@@ -24,7 +24,7 @@ const BoardUD = (props, state) => {
                             <div>작성자</div>
                         </td>
                         <td>
-                            <input name="name" maxLength="30" size="20" value={arr["board_name"]} readOnly />
+                            <input id="board_name" name="board_name" maxLength="30" size="20" value={props.writeud[0].board_name} onChange={props.handleupdateData} />
                         </td>
                     </tr>
                     <tr>
@@ -32,7 +32,7 @@ const BoardUD = (props, state) => {
                             <div>비밀번호</div>
                         </td>
                         <td>
-                            <input name="password" type="password" maxLength="4" size="10" onChange={props.handlePw} />
+                            <input id="password" name="password" type="password" maxLength="4" size="10" onChange={props.handlePw} />
                         </td>
                     </tr>
                     <tr>
@@ -40,7 +40,7 @@ const BoardUD = (props, state) => {
                             <div>내  용</div>
                         </td>
                         <td>
-                            <textarea name="content" cols="65" rows="15" value={arr["board_contents"]} readOnly />
+                            <textarea id="board_contents" name="board_contents" cols="65" rows="15" value={props.writeud[0].board_contents} onChange={props.handleupdateData} />
                         </td>
                     </tr>
                     <tr>
@@ -48,22 +48,19 @@ const BoardUD = (props, state) => {
                     </tr>
                     <tr>
                         <td colSpan="5" align="center">
-                            {/* <button onClick={ async ()=>{
-                                await props.ondataSubmit()
-                                // 등록 버튼 클릭 시 뒤로 가도록
-                                await props.props.history.push('/board')
-                                } } >등록</button> */}
-                            {/* 뒤로 버큰 틀릭 시 뒤로 가도록 */}
-                            <button onClick={() => {
-                                props.ondataUpdate()
-
+                            <button onClick={async () => {
+                                (props.props.state.password === props.writeud[0].board_password) ?
+                                    props.ondataUpdate().then(() => {
+                                        props.props.history.replace(`/board/${props.props.state.currentPage}`)
+                                    })
+                                    : alert('비밀번호를 다시 입력 하거라!')
                             }}>수정</button>
                             <button onClick={async () => {
                                 (props.props.state.password === props.writeud[0].board_password) ?
                                     props.onDeleteContent().then(() => {
                                         props.props.history.replace(`/board/${props.props.state.currentPage}`)
                                     })
-                                    : alert('다시 입력 하거라!')
+                                    : alert('비밀번호를 다시 입력 하거라!')
                             }}>삭제</button>
                             <button onClick={() => {
                                 props.props.history.push(`/board/${props.props.state.currentPage}`)
