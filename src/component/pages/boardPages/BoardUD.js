@@ -74,38 +74,6 @@ const BoardUD = (props, state) => {
                     </tr>
                     <tr>
                         <td colSpan="5" align="center">
-<<<<<<< HEAD
-                            {/* <button onClick={ async ()=>{
-                                await props.ondataSubmit()
-                                // 등록 버튼 클릭 시 뒤로 가도록
-                                await props.props.history.push('/board')
-                                } } >등록</button> */}
-                            {/* 뒤로 버큰 틀릭 시 뒤로 가도록 */}
-                            
-                                <>
-                                {
-                                
-                            }
-                                </>
-                            
-                            {/* <button onClick={async () => {
-                                // props.ondataUpdate();
-=======
-                            <button onClick={async () => {
->>>>>>> 01d83a585faaf975219c0ff2a943df37ac5c8f6b
-                                (props.props.state.password === props.writeud[0].board_password) ?
-                                    props.ondataUpdate().then(() => {
-                                        props.props.history.replace(`/board/${props.props.state.currentPage}`)
-                                    })
-                                    : alert('비밀번호를 다시 입력 하거라!')
-                            }}>수정</button>
-                            <button onClick={async () => {
-                                (props.props.state.password === props.writeud[0].board_password) ?
-                                    props.onDeleteContent().then(() => {
-                                        props.props.history.replace(`/board/${props.props.state.currentPage}`)
-                                    })
-                                    : alert('비밀번호를 다시 입력 하거라!')
-                            }}>삭제</button> */}
                             {setUpdateButton()}
                             {setDeleteButton()}
                             <button onClick={() => {

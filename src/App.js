@@ -245,11 +245,7 @@ class App extends Component {
       })
     })
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 01d83a585faaf975219c0ff2a943df37ac5c8f6b
   // 수정 handle
   handleupdateData = (e) => {
     this.setState({
@@ -258,14 +254,8 @@ class App extends Component {
         ...this.state.writeud[0],
         [e.target.name]: e.target.value,
       }]
-<<<<<<< HEAD
-    }) 
-  }
-=======
     })
   }
-
->>>>>>> 01d83a585faaf975219c0ff2a943df37ac5c8f6b
 
   //총 게시글의 개수를 가져옴
   handleTotalPage = () => {
