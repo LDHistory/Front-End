@@ -16,6 +16,8 @@ class App extends Component {
 
     number: '',
 
+    // keyud: '',
+
     signin: {
       email: '',
       pw: '',
@@ -53,6 +55,8 @@ class App extends Component {
     writeud: [
 
     ],
+
+    // password: '',
   }
 
   //로그인 폼에서 입력한 값을 state에 업데이트 하는 메서드
@@ -151,7 +155,8 @@ class App extends Component {
         });
       })
   }
-  
+
+
   handleSetCurrentPage = (num) => {
     this.setState({
       ...this.state,
@@ -164,6 +169,8 @@ class App extends Component {
       ...this.state.write,
       [e.target.name]: e.target.value,
     })
+    // console.log(this.state.write);
+    
   }
 
   onDeleteContent = () => {
@@ -228,6 +235,7 @@ class App extends Component {
 
     console.log(this.state.writeud[0]);
     
+
     return new Promise((resolve, reject) => {
       axios.post('http://13.58.55.98:5000/request/getBoardModify', {
       board_id: this.state.writeud[0].board_id,
@@ -254,7 +262,7 @@ class App extends Component {
         ...this.state.writeud[0],
         [e.target.name]: e.target.value,
       }]
-    })
+    }) 
   }
 
   //총 게시글의 개수를 가져옴
@@ -308,9 +316,8 @@ class App extends Component {
       },
     })
   }
- 
+
   render() {
-    console.log(this.state);
     return (
       <div>
         <Switch>
