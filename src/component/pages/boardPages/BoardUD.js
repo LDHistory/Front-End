@@ -7,7 +7,7 @@ const BoardUD = (props, state) => {
         arr = props.writeud[0]
         if (props.props.state.signin.email === props.writeud[0].board_user) {
             return <button onClick={async () => {
-                (props.props.state.signin.email === props.writeud[0].board_user) ?
+                (props.props.state.password === props.writeud[0].board_password) ?
                     props.ondataUpdate().then(() => {
                         props.props.history.replace(`/board/${props.props.state.currentPage}`)
                     })
