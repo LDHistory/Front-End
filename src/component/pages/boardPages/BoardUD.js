@@ -1,14 +1,40 @@
 import React from 'react';
 
 const BoardUD = (props, state) => {
-
     let arr = [];
+
+    function setUpdateButton() {
+        arr = props.writeud[0]
+        if (props.props.state.signin.email === props.writeud[0].board_user) {
+            return <button onClick={async () => {
+                (props.props.state.signin.email === props.writeud[0].board_user) ?
+                    props.ondataUpdate().then(() => {
+                        props.props.history.replace(`/board/${props.props.state.currentPage}`)
+                    })
+                    : alert('비밀번호를 다시 입력 하거라!')
+
+            }}>수정</button>
+        }
+    }
+    function setDeleteButton() {
+        arr = props.writeud[0]
+        if (props.props.state.signin.email === props.writeud[0].board_user) {
+            return <button onClick={async () => {
+                (props.props.state.password === props.writeud[0].board_password) ?
+                    props.onDeleteContent().then(() => {
+                        props.props.history.replace(`/board/${props.props.state.currentPage}`)
+                    })
+                    : alert('비밀번호를 다시 입력 하거라!')
+            }}>삭제</button>
+        }
+    }
+    
+    
 
     let test = () => {
         arr = props.writeud[0];
 
         for (let key in arr) {
-            // console.log(arr[key])
             return (
                 <>
                     <tr>
@@ -24,7 +50,7 @@ const BoardUD = (props, state) => {
                             <div>작성자</div>
                         </td>
                         <td>
-                            <input id="board_name" name="board_name" maxLength="30" size="20" value={props.writeud[0].board_name} onChange={props.handleupdateData} />
+                            <input id="board_name" name="board_name" maxLength="30" size="20" value={props.writeud[0].board_user} readOnly/>
                         </td>
                     </tr>
                     <tr>
@@ -32,7 +58,7 @@ const BoardUD = (props, state) => {
                             <div>비밀번호</div>
                         </td>
                         <td>
-                            <input id="password" name="password" type="password" maxLength="4" size="10" onChange={props.handlePw} />
+                            <input id="password" name="password" type="password" maxLength="4" size="10"  onChange={props.handlePw} />
                         </td>
                     </tr>
                     <tr>
@@ -48,20 +74,30 @@ const BoardUD = (props, state) => {
                     </tr>
                     <tr>
                         <td colSpan="5" align="center">
+<<<<<<< HEAD
                             {/* <button onClick={ async ()=>{
                                 await props.ondataSubmit()
                                 // 등록 버튼 클릭 시 뒤로 가도록
                                 await props.props.history.push('/board')
                                 } } >등록</button> */}
                             {/* 뒤로 버큰 틀릭 시 뒤로 가도록 */}
-                            <button onClick={async () => {
+                            
+                                <>
+                                {
+                                
+                            }
+                                </>
+                            
+                            {/* <button onClick={async () => {
                                 // props.ondataUpdate();
+=======
+                            <button onClick={async () => {
+>>>>>>> 01d83a585faaf975219c0ff2a943df37ac5c8f6b
                                 (props.props.state.password === props.writeud[0].board_password) ?
                                     props.ondataUpdate().then(() => {
                                         props.props.history.replace(`/board/${props.props.state.currentPage}`)
                                     })
                                     : alert('비밀번호를 다시 입력 하거라!')
-
                             }}>수정</button>
                             <button onClick={async () => {
                                 (props.props.state.password === props.writeud[0].board_password) ?
@@ -69,7 +105,9 @@ const BoardUD = (props, state) => {
                                         props.props.history.replace(`/board/${props.props.state.currentPage}`)
                                     })
                                     : alert('비밀번호를 다시 입력 하거라!')
-                            }}>삭제</button>
+                            }}>삭제</button> */}
+                            {setUpdateButton()}
+                            {setDeleteButton()}
                             <button onClick={() => {
                                 props.props.history.push(`/board/${props.props.state.currentPage}`)
                             }} >뒤로</button>
