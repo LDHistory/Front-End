@@ -1,7 +1,6 @@
 import React from 'react';
 
 const BoardWrite = (props) => {
-    
     return (
         <div align="center">
             <br />
@@ -21,7 +20,7 @@ const BoardWrite = (props) => {
                             <div>작성자</div>
                         </td>
                         <td>
-                            <input name="name" maxLength="30" size="20" onChange={props.handleSetBoardWriteData} />
+                            <input name="name" maxLength="30" size="20" value={props.props.state.signin.email} readOnly />
                         </td>
                     </tr>
                     <tr>
@@ -47,10 +46,10 @@ const BoardWrite = (props) => {
                         <td colSpan="5" align="center">
                             <button onClick={ async ()=>{
                                 await props.ondataSubmit()
-                                
-                                
+                                await props.setCurrentPage(1);
+                                await props.getBoardList(1);
                                 // 등록 버튼 클릭 시 뒤로 가도록
-                                await props.props.history.push('/board')
+                                await props.props.history.replace('/board/1')
                                 } } >등록</button>
                                 {/* 뒤로 버큰 틀릭 시 뒤로 가도록 */}
                             <button onClick={() => {props.props.history.push('/board')}} >뒤로</button>

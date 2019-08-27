@@ -12,7 +12,7 @@ const BoardItem = ({no, title, name, date, props, changeNumber}) => {
                                 {<Link 
                                 // board/page/
                                 to={`/board/${props.currentPage}/${no}`}
-                                style={{ textDecoration: 'none', color: "white"}}
+                                style={{ textDecoration: 'none', color: "black"}}
                                 onClick={async ()=>{
                                     await changeNumber(no);
                                     await props.props.history.push(`/board/${props.currentPage}/${no}`);

@@ -143,6 +143,7 @@ export default function Main(props) {
         size="small"
         onClick={() => {
           props.handleLogout();
+          props.history.push('/');
         }}>
         로그아웃
               </Button>
@@ -150,27 +151,28 @@ export default function Main(props) {
       return null;
     }
   }
+  
 
   //로그인 안하면 Board 안보이게 하는거 적용할 때 주석 풀기~~
-  // function setBoard() {
-  //  const checkInfo = props.state.signin;
-  //  if (checkInfo.email !== '' && checkInfo.pw !== ''){
-  //    return <Link
-  //            color="inherit"
-  //            noWrap
-  //            variant="body2"
-  //            onClick={() => {
-  //              props.changeBoard();
-  //              props.history.push('/board');
-  //            }}
-  //            className={classes.toolbarLink}
-  //          >
-  //            Board
-  //          </Link>
-  //  } else {
-  //    return null;
-  //  }
-  // }
+  function setBoard() {
+   const checkInfo = props.state.signin;
+   if (checkInfo.email !== '' && checkInfo.pw !== ''){
+     return <Link
+             color="inherit"
+             noWrap
+             variant="body2"
+             onClick={() => {
+               props.history.push('/board');
+             }}
+             className={classes.toolbarLink}
+           >
+             Board
+           </Link>
+   } else {
+     return null;
+   }
+  }
+  
   
   return (
     <React.Fragment>
@@ -186,7 +188,13 @@ export default function Main(props) {
             noWrap
             className={classes.toolbarTitle}
           >
-            Bit Team 3
+            <Link
+            style={{color: "black"}}
+            onClick={() => {
+              props.linkClickDataReset();
+              props.history.push('/');
+            }}
+            > Bit Team 3 </Link> 
           </Typography>
           {setLoginButton()}
           {setLogoutButton()}
@@ -206,20 +214,8 @@ export default function Main(props) {
           >
             About
           </Link>
-          <Link
-            color="inherit"
-            noWrap
-            variant="body2"
-            onClick={() => {
-              props.history.push('/board');
-            }}
 
-            className={classes.toolbarLink}
-          >
-            Board
-          </Link>
-
-          {/* {setBoard()} 로그인 안하면 board 안보이게..적용 시 위에 <Link>board</Link> 지우기*/}
+          {setBoard()}
         </Toolbar>
 
 
@@ -230,8 +226,24 @@ export default function Main(props) {
               path='/board/write'
               render={() =>
                 <BoardWrite handleSetBoardWriteData={props.handleSetBoardWriteData}
-                ondataSubmit={props.ondataSubmit}  
-                props={props} />
+                  ondataSubmit={props.ondataSubmit}  
+                  setCurrentPage={props.setCurrentPage}
+                  getBoardList={props.getBoardList}
+                  props={props} 
+                />
+              }
+            />
+            <Route
+              path={`/board/${props.state.currentPage}/:num`}
+              render={() =>
+                <BoardUD
+                  props={props}
+                  // signin={props.signin}
+                  writeud={props.writeud}
+                  ondataUpdate={() => { props.ondataUpdate() }}
+                  handlePw={props.handlePw}
+                  onDeleteContent={props.onDeleteContent}
+                />
               }
             />
             <Route

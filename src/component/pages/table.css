@@ -54,21 +54,24 @@ body {
   padding: 0 2em;   /* 웹 왼쪽에서의 패딩 */
   font-family: sans-serif;
   color: #444;
-  background: #eee;  /*웹 자체에서의 뒷 배경색*/
+  background: #000000;  /*웹 자체에서의 뒷 배경색*/
 }
 
 /* h1 태그 색깔 */
 h1 {
   font-weight: "normal";
-  font-size: 30pt;
+  font-size: 28pt;
   letter-spacing: -1px;
-  color: #34495E; 
+  /* color: #34495E;  */
+  color: rgb(0, 0, 0);
   
 }
 
 .rwd-table {
-  background: #34495E;   /* 테이블 배경 */
-  color: #fff;   /* 테이블 hd 글자 색 */
+  /*background: #34495E;*/   /* 테이블 배경 */
+  /*color: #fff;*/   /* 테이블 hd 글자 색 */
+  background: rgb(233, 237, 241);
+  color: #000;
   border-radius: 0.9em;
   overflow: hidden;
 }
@@ -89,6 +92,8 @@ h1 {
 .rwd-table th,
 .rwd-table td:before {
   /*color: #dd5;*/   /* th 태그 색깔 */
-  color : #000;
-  background: rgb(72, 100, 129);
+  /* color : #000; */
+  /* background: rgb(72, 100, 129); */
+  color : rgb(255, 255, 255);
+  background: rgb(34, 34, 37);
 }

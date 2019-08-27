@@ -16,8 +16,6 @@ class App extends Component {
 
     number: '',
 
-    keyud: '',
-
     signin: {
       email: '',
       pw: '',
@@ -66,7 +64,6 @@ class App extends Component {
         [e.target.name]: e.target.value,
       }
     })
-    console.log(this.state.signin);
   }
 
   //로그인 버튼을 눌렀을 때 express 서버로 보낸 data를 db에서 검증
@@ -92,7 +89,14 @@ class App extends Component {
       signin: {
         email: '',
         pw: '',
-      }
+      },
+      write: {
+        title: '',
+        name: '',
+        password: '',
+        content: '',
+        date: '',
+      },
     })
   }
 
@@ -145,7 +149,6 @@ class App extends Component {
           ...this.state,
           arr: response.data,
         });
-        console.log(this.state.arr);
       })
   }
   
@@ -183,8 +186,8 @@ class App extends Component {
     console.log(new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()))
 
     axios.post('http://13.58.55.98:5000/request/setBoard', {
-      name: this.state.write.name,
-      user: "ehd8266",
+      name: this.state.signin.email,
+      user: this.state.signin.email,
       pw: this.state.write.password,
       contents: this.state.write.content,
       date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
@@ -219,7 +222,6 @@ class App extends Component {
 
   }
 
-  //////////////////////////////////////////////////////
   // 수정한 데이터 db로 전송
   ondataUpdate = () => {
     alert('수정 완료')
@@ -230,8 +232,8 @@ class App extends Component {
       axios.post('http://13.58.55.98:5000/request/getBoardModify', {
       board_id: this.state.writeud[0].board_id,
       board_password: this.state.writeud[0].board_password,
-      name: this.state.writeud[0].board_name,
-      user: "edh8266",
+      name: this.state.signin.email,
+      user: this.state.signin.email,
       contents: this.state.writeud[0].board_contents,
       date: new Date().toLocaleDateString('ko-KR').concat(new Date().toLocaleTimeString()),
       title: this.state.writeud[0].board_title,    
@@ -243,7 +245,7 @@ class App extends Component {
       })
     })
   }
-  
+
   // 수정 handle
   handleupdateData = (e) => {
     this.setState({
@@ -254,7 +256,6 @@ class App extends Component {
       }]
     })
   }
-
 
   //총 게시글의 개수를 가져옴
   handleTotalPage = () => {
@@ -267,11 +268,19 @@ class App extends Component {
       })
   }
 
+  setLogoutData = () => {
+    this.setState({
+      ...this.state,
+      signin: {
+        email: '',
+        pw: '',
+      }
+    })
+  }
+
   changeNumber = (number) => {
     for (let i = 0; i < 10; i++) {
       if (this.state.arr[i].rownum === number) {
-        // console.log('출력', this.state.arr[i]);
-
         axios.get('http://13.58.55.98:5000/request/getBoardContents', {
           params: {
             board_id: this.state.arr[i].board_id
@@ -285,22 +294,45 @@ class App extends Component {
           })
       }
     }
-    console.log('writeud', this.state.writeud);
   }
 
-
+  linkClickDataReset = () => {
+    this.setState({
+      ...this.state,
+      write: {
+        title: '',
+        name: '',
+        password: '',
+        content: '',
+        date: '',
+      },
+    })
+  }
+ 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Switch>
           <Route
             path='/login'
-            render={props => <Signin {...props} setData={this.handleSetSigninData} signin={this.handleSignin} changeAbout={this.changeAbout} />}
+            render={props => 
+              <Signin {...props} 
+                setData={this.handleSetSigninData} 
+                signin={this.handleSignin} 
+                changeAbout={this.changeAbout} 
+                setLogoutData={this.setLogoutData}
+                />}
           />
 
           <Route
             path='/join'
-            render={props => <Signup {...props} setData={this.handleSetSignupData} signup={this.handleSignup} changeAbout={this.changeAbout} />}
+            render={props => 
+              <Signup {...props} 
+                setData={this.handleSetSignupData} 
+                signup={this.handleSignup} 
+                changeAbout={this.changeAbout} 
+                />}
           />
           <Route
             path="/"
@@ -328,6 +360,10 @@ class App extends Component {
                 onDeleteContent={this.onDeleteContent}
 
                 handleupdateData={this.handleupdateData}
+
+                setLogoutData={this.setLogoutData}
+
+                linkClickDataReset={this.linkClickDataReset}
               />
             }
           />

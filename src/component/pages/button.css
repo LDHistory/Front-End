@@ -1,6 +1,7 @@
 .button {
   background-color: #4CAF50; /* Green */
-  background: rgb(92, 126, 163);
+  /* background: rgb(92, 126, 163); */
+  background: rgb(8, 8, 8);
   border: none;
   color: white;
   padding: 10px 25px;
@@ -17,7 +18,8 @@
   /* Blue */
   /* background-color: #008CBA;  */
   /* background: rgb(108, 151, 197); */
-  background: greenyellow;
+  /* background: greenyellow;*/
+  background: rgb(0, 0, 0);
   border: none;
   color: white;
   padding: 5px 10px;
